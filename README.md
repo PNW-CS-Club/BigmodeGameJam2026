@@ -19,4 +19,6 @@ No VR games, judge won't have a headset hooked up.
 A greaser slips and slides through an endless runner while avoiding obstacles. 
 * Endless runner
 * Slick floor / Slippery physics
+* Score
+
 
