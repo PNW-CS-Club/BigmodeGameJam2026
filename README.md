@@ -14,3 +14,9 @@ Games must be single player only.
 Teams can be no larger than 5.
 No AI generated work.
 No VR games, judge won't have a headset hooked up.
+
+## Idea
+A greaser slips and slides through an endless runner while avoiding obstacles. 
+* Endless runner
+* Slick floor / Slippery physics
+
