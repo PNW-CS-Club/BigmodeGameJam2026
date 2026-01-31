@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     public int maxObstacles = 5; // The maximum number of obstacles allowed in the scene
     private Vector3 pos; // Position of the obstacle
     private Quaternion rot; // Rotation of the obstacle
-    private Vector3 initVelocity; // Initial velocity of the obstacle
     private float angleDegrees; // Angle of the obstacle in degrees
 
     private float spawnInterval; // The rate at which obstacles are spawned  (objects/second)
@@ -90,8 +89,26 @@ public class GameManager : MonoBehaviour
 
         // Instantiate the obstacle
         if(numberOfObstacles < maxObstacles){
-            Instantiate(randomObstacle, pos, rot);
+            randomObstacle = Instantiate(randomObstacle, pos, rot);
             ++numberOfObstacles;
+        }
+
+        // Give the obstacle a random initial velocity
+        Rigidbody2D rb = randomObstacle.GetComponent<Rigidbody2D>();
+        int direction = Random.Range(0,2);
+        float obstacleSpeed = Random.Range(0f,5f);
+        if(rb != null){
+            if(direction == 0){
+                // Set the velocity left
+                rb.linearVelocity = Vector3.left * obstacleSpeed;
+            } else if (direction == 1){
+                // Set the velocity right
+                rb.linearVelocity = Vector3.right * obstacleSpeed;
+            } else{
+                // Set the velocity straight down
+                rb.linearVelocity = Vector3.down * obstacleSpeed;
+            }
+            
         }
 
         
