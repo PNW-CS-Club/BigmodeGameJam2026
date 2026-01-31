@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,6 +7,10 @@ public class GameManager : MonoBehaviour
     
     // Obstacle prefabs
     public GameObject smallSquare;
+    public GameObject smallTriangle;
+
+    // Obstacle list
+    private List<GameObject> obstaclePrefabs = new List<GameObject>();
 
     // Obstacle variables
     public int numberOfObstacles = 0; // The current number of obstacles in the scene
@@ -22,6 +27,10 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // Populate Obstacle Prefabs list
+        obstaclePrefabs.Add(smallSquare);
+        obstaclePrefabs.Add(smallTriangle);
+
         // Set up Run Timer
         runTimer = GetComponent<RunTimer>();
         
@@ -43,14 +52,8 @@ public class GameManager : MonoBehaviour
         if(timeSinceLastObstacle >= spawnInterval){
             // Generate an obstacle
             GenerateObstacles();
-            Debug.Log(spawnInterval);
             timeSinceLastObstacle = 0f; // reset timer
         }
-
-            
-        
-        
-
 
         //TODO: Delete obstacles that reach the bottom of the scene
         // Place a trigger below the visible screen that deactivates objects when they collide
@@ -73,13 +76,12 @@ public class GameManager : MonoBehaviour
 
     private void GenerateObstacles()
     {
-        //Instantiate(smallSquare, new Vector3(0,7,0), Quaternion.identity); //test
-        //TODO: Pick a random obstacle from a list
+        // Pick a random obstacle from obstaclePrefabs
+        int index = Random.Range(0,obstaclePrefabs.Count);
+        GameObject randomObstacle = obstaclePrefabs[index];
 
-        //TODO: Give the obstacle a random start position from the top
-        // x bounds: ( a , b )
-        // y: 7
-        // z: 0
+
+        // Give the obstacle a random start position from the top
         pos = transform.position + new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
 
         //TODO: Give the object a random rotation
@@ -88,7 +90,7 @@ public class GameManager : MonoBehaviour
 
         // Instantiate the obstacle
         if(numberOfObstacles < maxObstacles){
-            Instantiate(smallSquare, pos, rot);
+            Instantiate(randomObstacle, pos, rot);
             ++numberOfObstacles;
         }
 

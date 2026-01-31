@@ -433,6 +433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   smallSquare: {fileID: 1462605033370219205, guid: 7f95b156db843984b9afbe8db4be55eb, type: 3}
+  smallTriangle: {fileID: 3180369182102424114, guid: 0a5c63541f8dbf34f8ac139d28b88fbd, type: 3}
   numberOfObstacles: 0
   maxObstacles: 200
 --- !u!4 &879319723
