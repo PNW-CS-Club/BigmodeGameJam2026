@@ -2,25 +2,38 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private RunTimer runTimer; 
+    
     // Obstacle prefabs
     public GameObject smallSquare;
 
     // Obstacle variables
     public int numberOfObstacles = 0; // The current number of obstacles in the scene
     public int maxObstacles = 5; // The maximum number of obstacles allowed in the scene
-    private Vector3 pos;
-    private Quaternion rot;
-    private float angleDegrees;
+    private Vector3 pos; // Position of the obstacle
+    private Quaternion rot; // Rotation of the obstacle
+    private float angleDegrees; // Angle of the obstacle in degrees
+
+    private float generationRate; // The rate at which obstacles are spawned
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        runTimer = GetComponent<RunTimer>();
+        runTimer.isRunning = true;
         GenerateObstacles();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //TODO: Generate obstacles 
+        if(runTimer != null && runTimer.isRunning){
+            generationRate = runTimer.runTime * 0.01f;
+        }
+        
+
+
         //TODO: Delete obstacles that reach the bottom of the scene
         // Place a trigger below the visible screen that deactivates objects when they collide
     }
@@ -49,7 +62,10 @@ public class GameManager : MonoBehaviour
         rot = Quaternion.Euler(0, 0, angleDegrees);
 
         // Instantiate the obstacle
-        Instantiate(smallSquare, pos, rot);
+        if(numberOfObstacles < maxObstacles){
+            Instantiate(smallSquare, pos, rot);
+            ++numberOfObstacles;
+        }
 
         
 
