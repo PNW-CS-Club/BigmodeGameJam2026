@@ -12,25 +12,43 @@ public class GameManager : MonoBehaviour
     public int maxObstacles = 5; // The maximum number of obstacles allowed in the scene
     private Vector3 pos; // Position of the obstacle
     private Quaternion rot; // Rotation of the obstacle
+    private Vector3 initVelocity; // Initial velocity of the obstacle
     private float angleDegrees; // Angle of the obstacle in degrees
 
-    private float generationRate; // The rate at which obstacles are spawned
+    private float spawnInterval; // The rate at which obstacles are spawned  (objects/second)
+    private float timeSinceLastObstacle; // The Time.deltaTime since the last obstacle was spawned
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // Set up Run Timer
         runTimer = GetComponent<RunTimer>();
-        runTimer.isRunning = true;
-        GenerateObstacles();
+        
+        StartRun();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //TODO: Generate obstacles 
-        if(runTimer != null && runTimer.isRunning){
-            generationRate = runTimer.runTime * 0.01f;
+        if(runTimer == null) return;
+        if(!runTimer.isRunning) return; // game paused or game ended
+
+        timeSinceLastObstacle += Time.deltaTime; // increment with time
+
+        // Generate obstacles
+        // Note: Can use AnimationCurve in the future if we want to be fancy
+        spawnInterval = Mathf.Max(0.4f, 2.0f - runTimer.runTime * 0.01f); // obstacles per second
+        
+        if(timeSinceLastObstacle >= spawnInterval){
+            // Generate an obstacle
+            GenerateObstacles();
+            Debug.Log(spawnInterval);
+            timeSinceLastObstacle = 0f; // reset timer
         }
+
+            
+        
         
 
 
@@ -46,7 +64,14 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void GenerateObstacles()
+    private void StartRun(){
+        // Set up Obstacle Spawn Timer
+        timeSinceLastObstacle = 0f;
+        runTimer.StartRun(); // runTimer.isRunning -> true
+
+    }
+
+    private void GenerateObstacles()
     {
         //Instantiate(smallSquare, new Vector3(0,7,0), Quaternion.identity); //test
         //TODO: Pick a random obstacle from a list
@@ -55,10 +80,10 @@ public class GameManager : MonoBehaviour
         // x bounds: ( a , b )
         // y: 7
         // z: 0
-        pos = transform.position + new Vector3(0, 7, 0);
+        pos = transform.position + new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
 
         //TODO: Give the object a random rotation
-        angleDegrees = 25f;
+        angleDegrees = 0f;
         rot = Quaternion.Euler(0, 0, angleDegrees);
 
         // Instantiate the obstacle
