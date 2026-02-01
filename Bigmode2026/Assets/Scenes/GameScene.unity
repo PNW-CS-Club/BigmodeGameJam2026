@@ -413,6 +413,7 @@ GameObject:
   - component: {fileID: 879319723}
   - component: {fileID: 879319722}
   - component: {fileID: 879319724}
+  - component: {fileID: 879319725}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -464,6 +465,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RunTimer
   isRunning: 0
+--- !u!114 &879319725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879319721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 876ef204260b0a34993e4957c5a16838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Scoring
+  Coin: {fileID: 7394592522568162192, guid: 5493ec8c89fb981408b14ed90733ce66, type: 3}
 --- !u!1 &1293471716
 GameObject:
   m_ObjectHideFlags: 0
