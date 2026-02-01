@@ -1,5 +1,4 @@
-using System.Drawing;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Scoring : MonoBehaviour
@@ -8,14 +7,12 @@ public class Scoring : MonoBehaviour
     public static int points = 0;
 
     //time is based on the score
-
     [SerializeField] 
-    private GameObject ExtraCollectingObject;
+    private GameObject CollectableObject;
 
     public bool collected = false; 
 
-    public int min = -10;
-    public int max = 10;
+    private Vector3 pos;
 
     
     void OnTriggerEnter2D(Collider2D collision)
@@ -24,13 +21,12 @@ public class Scoring : MonoBehaviour
         {
             points += 10;
             Debug.Log("You collected the start" + points);
-            ExtraCollectingObject.SetActive(false);
+            CollectableObject.SetActive(false);
         }
     }
 
     void Start()
     {
-        //whatever gameobject that we decided to use here
         spawnInObject();
     }
 
@@ -40,19 +36,12 @@ public class Scoring : MonoBehaviour
         
     }
 
-    void pointsTraveled()
-    {
-        if(points > 0)
-        {
-            
-        }
-    }
-
     void spawnInObject()
     {
-        Vector3 spawnpoint = new Vector3(0,0,0);
-        Instantiate(ExtraCollectingObject);
+        // Gives object a random postion
+        pos = new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
 
-        ExtraCollectingObject.SetActive(true);
+        // Instantiate the collectable object
+        Instantiate(CollectableObject, pos, Quaternion.identity);
     }
 }
