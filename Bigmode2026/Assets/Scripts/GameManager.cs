@@ -123,9 +123,8 @@ public class GameManager : MonoBehaviour
             } else{
                 // Set the velocity straight down
                 rb.linearVelocity = Vector3.down * obstacleSpeed;
-            }
-            
+            } 
         }
-        
+        poolManager.OnGet(obstacle);
     }
 }

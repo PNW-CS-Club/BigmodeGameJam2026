@@ -19,14 +19,7 @@ public class PoolManager : MonoBehaviour
         // Instantiate a pool for each obstacle pool
         // foreach(var entry in pools)
         // {
-        //     var pool = new ObjectPool<GameObject>( // callback parameters:
-        //         () => Create(entry.prefab),     // createFunc
-        //         obj => obj.SetActive(true),     // actionOnGet
-        //         obj => obj.SetActive(false),    // actionOnRelease
-        //         obj => Destroy(obj),            // actionOnDestroy
-        //         false,                          // collectionCheck
-        //         10,              // defaultCapacity
-        //         30           // maxSize
+        //     var pool = new ObjectPool<GameObject>( ...
         //     );
 
         //     //poolMap.Add(entry.ObstacleDifficulty,pool);

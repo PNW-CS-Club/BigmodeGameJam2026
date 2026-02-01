@@ -3,11 +3,12 @@ using UnityEngine.Pool;
 
 public class DespawnZone : MonoBehaviour
 {
-    private ObjectPool<GameObject> pool;
+    [SerializeField] PoolManager poolManager;
     
     void OnTriggerEnter2D(Collider2D other){
+        GameObject obj = other.transform.parent.gameObject;
         if(other.CompareTag("Floor")){
-            pool.Release(gameObject);
+            poolManager.OnRelease(obj);
         }
     }
 }
