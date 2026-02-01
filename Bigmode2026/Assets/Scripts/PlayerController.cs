@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,11 +16,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
 
     [SerializeField, Min(0.01f)] private float moveForce;
-    [SerializeField, Min(0.01f)] private float maxVelocity;
+    [FormerlySerializedAs("maxVelocity")] [SerializeField, Min(0.01f)] private float maxSpeed;
+    [SerializeField, Min(1f)] private float decelerationBonus;
     
 
     void Awake() {
-        leftAction = CreateInputAction(Key.A, Key.LeftArrow);
+        leftAction = CreateInputAction(Key.A, Key.LeftArrow); // accepts any number of key arguments
         rightAction = CreateInputAction(Key.D, Key.RightArrow);
         upAction = CreateInputAction(Key.W, Key.UpArrow);
         downAction = CreateInputAction(Key.S, Key.DownArrow);
@@ -51,13 +53,25 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate() {
         // Only modify physics in FixedUpdate
 
-        rb.AddForce(Vector2.right * (xInput * moveForce * Time.fixedDeltaTime));
+        var force = xInput * moveForce * Time.fixedDeltaTime;
+        if (rb.linearVelocityX * xInput < 0) {
+            // is decelerating; should be easier than accelerating
+            force *= decelerationBonus;
+        }
 
-        if (rb.linearVelocityX > maxVelocity) {
-            rb.linearVelocityX = maxVelocity;
+        rb.AddForce(Vector2.right * force);
+
+        // clamp speed to be at most maxSpeed
+        if (rb.linearVelocityX > maxSpeed) {
+            rb.linearVelocityX = maxSpeed;
         }
-        else if (rb.linearVelocityX < -maxVelocity) {
-            rb.linearVelocityX = -maxVelocity;
+        else if (rb.linearVelocityX < -maxSpeed) {
+            rb.linearVelocityX = -maxSpeed;
         }
+    }
+
+    void OnDrawGizmos() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, 0.5f);
     }
 }
