@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
-public class ScoreManger : MonoBehaviour
+public class ScoreManager : MonoBehaviour
 {
     public Text scoreText;
     public int score = 0;

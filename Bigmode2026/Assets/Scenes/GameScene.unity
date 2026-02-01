@@ -474,7 +474,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 879319721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 876ef204260b0a34993e4957c5a16838, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ec9e3096169c7d468805fee69a30f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Scoring
   Coin: {fileID: 7394592522568162192, guid: 5493ec8c89fb981408b14ed90733ce66, type: 3}

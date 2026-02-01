@@ -4,7 +4,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class Collectable : MonoBehaviour
 {
-    ScoreManger manager;
+    ScoreManager manager;
     [SerializeField] GameObject Floor;
     public bool collected = false; 
 
