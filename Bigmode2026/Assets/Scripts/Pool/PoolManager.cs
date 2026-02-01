@@ -9,7 +9,7 @@ public class PoolManager : MonoBehaviour
     // Obstacle prefabs
     public GameObject smallSquare;
     public GameObject smallTriangle;
-    private ObjectPool<GameObject> pool;
+    public ObjectPool<GameObject> pool;
     //private Dictionary<ObstacleDifficulty, ObjectPool<GameObject>> poolMap;
 
     void Awake()
@@ -39,19 +39,19 @@ public class PoolManager : MonoBehaviour
     }
 
     // Creates a new pooled GameObject the first time (and whenever the pool needs more)
-    public GameObject CreateObstacle()
+    private GameObject CreateObstacle()
     {
         GameObject obj = Instantiate(smallSquare);
         obj.SetActive(false);
         return obj;
     }
 
-    public void OnGet(GameObject obj)
+    private void OnGet(GameObject obj)
     {
         obj.SetActive(true); 
     }
 
-    public void OnRelease(GameObject obj)
+    private void OnRelease(GameObject obj)
     {
         obj.SetActive(false);
     }
@@ -61,5 +61,6 @@ public class PoolManager : MonoBehaviour
     {
         Destroy(obj);
     }
+ 
 
 }

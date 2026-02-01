@@ -6,9 +6,8 @@ public class DespawnZone : MonoBehaviour
     [SerializeField] PoolManager poolManager;
     
     void OnTriggerEnter2D(Collider2D other){
-        GameObject obj = other.transform.parent.gameObject;
-        if(other.CompareTag("Floor")){
-            poolManager.OnRelease(obj);
+        if(other.CompareTag("Obstacle")){
+            poolManager.pool.Release(other.gameObject);
         }
     }
 }

@@ -15,17 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PoolManager poolManager;
     
     private RunTimer runTimer; 
-    
-    // Obstacle prefabs
-    public GameObject smallSquare;
-    public GameObject smallTriangle;
-
-    // Obstacle list
-    private List<GameObject> obstaclePrefabs = new List<GameObject>();
 
     // Obstacle variables
-    public int numberOfObstacles = 0; // The current number of obstacles in the scene
-    public int maxObstacles = 5; // The maximum number of obstacles allowed in the scene
     private Vector3 pos; // Position of the obstacle
     private Quaternion rot; // Rotation of the obstacle
     private float angleDegrees; // Angle of the obstacle in degrees
@@ -37,10 +28,6 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Populate Obstacle Prefabs list
-        obstaclePrefabs.Add(smallSquare);
-        obstaclePrefabs.Add(smallTriangle);
-
         // Set up Run Timer
         runTimer = GetComponent<RunTimer>();
         
@@ -59,10 +46,9 @@ public class GameManager : MonoBehaviour
         // Note: Can use AnimationCurve in the future if we want to be fancy
         spawnInterval = Mathf.Max(0.4f, 2.0f - runTimer.runTime * 0.01f); // obstacles per second
         
-        if(timeSinceLastObstacle >= spawnInterval && numberOfObstacles < maxObstacles){
+        if(timeSinceLastObstacle >= spawnInterval){
             // Generate an obstacle
             GenerateObstacles();
-            ++numberOfObstacles;
             timeSinceLastObstacle = 0f; // reset timer
         }
 
@@ -103,7 +89,7 @@ public class GameManager : MonoBehaviour
         //TODO: Choose an obstacle pool to spawn from
 
         // Spawning obstacles 
-        GameObject obstacle = poolManager.CreateObstacle();
+        GameObject obstacle = poolManager.pool.Get();
 
         // Give the obstacle a random start position from the top
         obstacle.transform.position = new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
@@ -125,6 +111,5 @@ public class GameManager : MonoBehaviour
                 rb.linearVelocity = Vector3.down * obstacleSpeed;
             } 
         }
-        poolManager.OnGet(obstacle);
     }
 }
