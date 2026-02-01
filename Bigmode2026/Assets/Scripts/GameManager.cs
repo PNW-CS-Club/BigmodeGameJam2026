@@ -1,8 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// public enum ObstacleDifficulty
+// {
+//     Easy,
+//     Medium,
+//     Hard
+// }
+
+
 public class GameManager : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private PoolManager poolManager;
+    
     private RunTimer runTimer; 
     
     // Obstacle prefabs
@@ -48,9 +59,10 @@ public class GameManager : MonoBehaviour
         // Note: Can use AnimationCurve in the future if we want to be fancy
         spawnInterval = Mathf.Max(0.4f, 2.0f - runTimer.runTime * 0.01f); // obstacles per second
         
-        if(timeSinceLastObstacle >= spawnInterval){
+        if(timeSinceLastObstacle >= spawnInterval && numberOfObstacles < maxObstacles){
             // Generate an obstacle
             GenerateObstacles();
+            ++numberOfObstacles;
             timeSinceLastObstacle = 0f; // reset timer
         }
 
@@ -73,28 +85,32 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // public ObstacleDifficulty PickObstacleDifficulty(float t)
+    // {
+    //     if (t < 20f) return ObstacleDifficulty.Easy;
+
+    //     if (t < 45f)
+    //         return Random.value < 0.7f ? ObstacleDifficulty.Easy : ObstacleDifficulty.Medium;
+
+    //     float r = Random.value;
+    //     if (r < 0.5f) return ObstacleDifficulty.Medium;
+    //     if (r < 0.85f) return ObstacleDifficulty.Hard;
+    //     return ObstacleDifficulty.Easy;
+    // }
+
     private void GenerateObstacles()
     {
-        // Pick a random obstacle from obstaclePrefabs
-        int index = Random.Range(0,obstaclePrefabs.Count);
-        GameObject randomObstacle = obstaclePrefabs[index];
+        //TODO: Choose an obstacle pool to spawn from
 
+        // Spawning obstacles 
+        GameObject obstacle = poolManager.CreateObstacle();
 
         // Give the obstacle a random start position from the top
-        pos = transform.position + new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
+        obstacle.transform.position = new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
 
-        //TODO: Give the object a random rotation
-        angleDegrees = 0f;
-        rot = Quaternion.Euler(0, 0, angleDegrees);
-
-        // Instantiate the obstacle
-        if(numberOfObstacles < maxObstacles){
-            randomObstacle = Instantiate(randomObstacle, pos, rot);
-            ++numberOfObstacles;
-        }
 
         // Give the obstacle a random initial velocity
-        Rigidbody2D rb = randomObstacle.GetComponent<Rigidbody2D>();
+        Rigidbody2D rb = obstacle.GetComponent<Rigidbody2D>();
         int direction = Random.Range(0,2);
         float obstacleSpeed = Random.Range(0f,5f);
         if(rb != null){
@@ -110,9 +126,6 @@ public class GameManager : MonoBehaviour
             }
             
         }
-
-        
-
         
     }
 }
