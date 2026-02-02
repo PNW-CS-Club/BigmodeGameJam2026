@@ -5,7 +5,7 @@ using UnityEngine;
 public class CollectableSpawn : MonoBehaviour
 {
     private RunTimer runTimer;
-    public GameObject Coin;
+    public GameObject CoinPrefab;
     private Vector3 pos;
     private float timeSinceLastCoinSpawn;
     private float spawnInterval;
@@ -33,9 +33,11 @@ public class CollectableSpawn : MonoBehaviour
         pos = new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
 
         // Instantiate the collectable object
-        Instantiate(Coin, pos, Quaternion.identity);
+        GameObject Coin = Instantiate(CoinPrefab, pos, Quaternion.identity);
+        Collectable collectable = Coin.GetComponent<Collectable>();
+        collectable.manager = gameObject.GetComponent<ScoreManager>();
 
-        Rigidbody2D rb = Coin.GetComponent<Rigidbody2D>();
+        Rigidbody2D rb = CoinPrefab.GetComponent<Rigidbody2D>();
         
         float obstacleSpeed = Random.Range(0f,5f);
         rb.linearVelocityY = obstacleSpeed;
