@@ -51,9 +51,6 @@ public class GameManager : MonoBehaviour
             GenerateObstacles();
             timeSinceLastObstacle = 0f; // reset timer
         }
-
-        //TODO: Delete obstacles that reach the bottom of the scene
-        // Place a trigger below the visible screen that deactivates objects when they collide
     }
 
     /** FixedUpdate is called at fixed time intervals, synchronized with the physics system.
@@ -87,9 +84,10 @@ public class GameManager : MonoBehaviour
     private void GenerateObstacles()
     {
         //TODO: Choose an obstacle pool to spawn from
-
+        ObstacleType obstacleType = (Random.value >= 0.5f) ? ObstacleType.SmallSquare : ObstacleType.Basketball;
+        
         // Spawning obstacles 
-        GameObject obstacle = poolManager.pool.Get();
+        GameObject obstacle = poolManager.GetObstacle(obstacleType);
 
         // Give the obstacle a random start position from the top
         obstacle.transform.position = new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);

@@ -4,44 +4,35 @@ using System.Collections.Generic;
 
 public class PoolManager : MonoBehaviour
 {
-    
-    //private List<PooledObstacle> pools;
-    // Obstacle prefabs
-    public GameObject smallSquare;
-    public GameObject smallTriangle;
-    public ObjectPool<GameObject> pool;
-    //private Dictionary<ObstacleDifficulty, ObjectPool<GameObject>> poolMap;
+    [SerializeField]  private ObstacleInfo[] obstacleInfoList;
+    [HideInInspector] public  Dictionary<ObstacleType, ObjectPool<GameObject>> poolMap;
 
     void Awake()
     {
-        //poolMap = new Dictionary<ObstacleDifficulty, ObjectPool<GameObject>>();
+        poolMap = new();
 
-        // Instantiate a pool for each obstacle pool
-        // foreach(var entry in pools)
-        // {
-        //     var pool = new ObjectPool<GameObject>( ...
-        //     );
-
-        //     //poolMap.Add(entry.ObstacleDifficulty,pool);
-        // }
-
-        // Create a pool with the four core callbacks
-        pool = new ObjectPool<GameObject>(
-            createFunc: CreateObstacle,
-            actionOnGet: OnGet,
-            actionOnRelease: OnRelease,
-            actionOnDestroy: OnDestroyObstacle,
-            collectionCheck: false, // Use to debug double release mistakes
-            defaultCapacity: 10,
-            maxSize: 30
-        );
+        foreach (var obstacleInfo in obstacleInfoList) {
+            var prefab = obstacleInfo.prefab;
+            
+            ObjectPool<GameObject> pool = new (
+                createFunc: () => CreateObstacle(prefab), // captures the reference to "prefab"
+                actionOnGet: OnGet,
+                actionOnRelease: OnRelease,
+                actionOnDestroy: OnDestroyObstacle,
+                collectionCheck: false, // Use to debug double release mistakes
+                defaultCapacity: 10,
+                maxSize: 30
+            );
+            
+            poolMap.Add(obstacleInfo.type, pool);
+        }
 
     }
 
     // Creates a new pooled GameObject the first time (and whenever the pool needs more)
-    private GameObject CreateObstacle()
+    private GameObject CreateObstacle(GameObject obstacle)
     {
-        GameObject obj = Instantiate(smallSquare);
+        GameObject obj = Instantiate(obstacle, transform);
         obj.SetActive(false);
         return obj;
     }
@@ -61,6 +52,24 @@ public class PoolManager : MonoBehaviour
     {
         Destroy(obj);
     }
- 
+
+
+    public GameObject GetObstacle(ObstacleType type) {
+        if (poolMap.TryGetValue(type, out var pool)) {
+            return pool.Get();
+        }
+        else {
+            throw new KeyNotFoundException($"Failed to find obstacle pool of type {type}");
+        }
+    }
+    
+    
+    public void TryRelease(GameObject obj) {
+        var info = obj.GetComponent<ObstacleInfo>();
+        if (!info) return;
+
+        if (!poolMap.TryGetValue(info.type, out var pool)) return;
+        pool.Release(obj);
+    }
 
 }
