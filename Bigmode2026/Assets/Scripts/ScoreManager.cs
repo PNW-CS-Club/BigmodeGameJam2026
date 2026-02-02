@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    public Text scoreText;
+    [SerializeField] private TMP_Text scoreText;
     public int score = 0;
 
     void Start()

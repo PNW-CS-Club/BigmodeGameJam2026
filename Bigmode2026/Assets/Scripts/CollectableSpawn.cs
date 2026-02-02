@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Scoring : MonoBehaviour
+public class CollectableSpawn : MonoBehaviour
 {
     private RunTimer runTimer;
     public GameObject Coin;
