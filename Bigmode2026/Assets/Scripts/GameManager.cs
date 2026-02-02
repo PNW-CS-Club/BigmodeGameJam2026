@@ -90,23 +90,25 @@ public class GameManager : MonoBehaviour
         GameObject obstacle = poolManager.GetObstacle(obstacleType);
 
         // Give the obstacle a random start position from the top
-        obstacle.transform.position = new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
+        obstacle.transform.position = new Vector3(Random.Range(-10.0f,10.0f), 10f, 0);
 
 
         // Give the obstacle a random initial velocity
         Rigidbody2D rb = obstacle.GetComponent<Rigidbody2D>();
-        int direction = Random.Range(0,2);
-        float obstacleSpeed = Random.Range(0f,5f);
+        int direction = Random.Range(0,3);
+        float obstacleSpeed = Random.Range(3f,7f);
         if(rb != null){
             if(direction == 0){
                 // Set the velocity left
-                rb.linearVelocity = Vector3.left * obstacleSpeed;
+                rb.linearVelocity += Vector2.left * obstacleSpeed;
+                rb.linearVelocity += Vector2.down * obstacleSpeed;
             } else if (direction == 1){
                 // Set the velocity right
-                rb.linearVelocity = Vector3.right * obstacleSpeed;
+                rb.linearVelocity += Vector2.right * obstacleSpeed;
+                rb.linearVelocity += Vector2.down * obstacleSpeed;
             } else{
                 // Set the velocity straight down
-                rb.linearVelocity = Vector3.down * obstacleSpeed;
+                rb.linearVelocity += Vector2.down * obstacleSpeed;
             } 
         }
     }
