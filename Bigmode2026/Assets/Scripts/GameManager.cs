@@ -74,9 +74,19 @@ public class GameManager : MonoBehaviour
 
     public ObstacleDifficulty PickObstacleDifficulty(float t)
     {
-        if (t < 10f) return ObstacleDifficulty.Easy;
+        // if (t < 10f) return ObstacleDifficulty.Easy;
 
-        if (t < 25f)
+        // if (t < 25f)
+        //     return Random.value < 0.7f ? ObstacleDifficulty.Easy : ObstacleDifficulty.Medium;
+        
+        // float r = Random.value;
+        // if (r < 0.5f) return ObstacleDifficulty.Medium; // 50%
+        // if (r < 0.85f) return ObstacleDifficulty.Hard;  // 35%
+        // return ObstacleDifficulty.Easy;                 // 15%
+
+        if (t < 5f) return ObstacleDifficulty.Easy;
+
+        if (t < 10f)
             return Random.value < 0.7f ? ObstacleDifficulty.Easy : ObstacleDifficulty.Medium;
         
         float r = Random.value;
@@ -115,7 +125,10 @@ public class GameManager : MonoBehaviour
         GameObject obstacle = poolManager.GetObstacle(obstacleType);
 
         // Give the obstacle a random start position from the top
-        obstacle.transform.position = new Vector3(Random.Range(-10.0f,10.0f), 10f, 0);
+        float obstacleLength = obstacle.GetComponent<ObstacleInfo>().unitLength;
+        // Round the x position to the nearest unit / Spawn object at y = 10 / z = 0
+        obstacle.transform.position = new Vector3(Mathf.Round(Random.Range(-11.0f+obstacleLength/2f, 11.0f-obstacleLength/2f)), 10f, 0);
+        
 
 
         // Give the obstacle a random initial velocity
