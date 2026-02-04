@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6a92d96f3deedd44a83c04b34a0014d7
+guid: 0b044168dc027fb4fb3c065daf617590
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3709532627662422788
-    second: LockersVert_0
+      213: 2911393741158805832
+    second: LockersVert 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -53,7 +53,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LockersVert_0
+      name: TileFloor2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cfcb575aab7158cc0800000000000000
-      internalID: -3709532627662422788
+      spriteID: 915f2288ec212ba90800000000000000
+      internalID: -7299751367757597415
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LockersVert_0: -3709532627662422788
+      TileFloor2_0: -7299751367757597415
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

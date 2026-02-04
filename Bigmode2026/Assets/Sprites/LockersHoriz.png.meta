@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c88599696786d924c9ef87d81e40d311
+guid: 74a9118b5000fdd46b9b2ae372234afa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3812526458069624511
-    second: Basketball2_0
+      213: 4985603945212601791
+    second: LockersHorizStandalone (1)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,12 +48,12 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 65d6df08c5eaed344a301af85ead725a
+guid: 9f5c869189f275a498b83e35afe82a58
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4766476954653860968
-    second: LockersHorizSeamless_0
+      213: -3548762877600711876
+    second: WoodFloor2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -53,7 +53,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -100,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LockersHorizSeamless_0
+      name: TileFloor2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 89b55cfa6721addb0800000000000000
-      internalID: -4766476954653860968
+      spriteID: 915f2288ec212ba90800000000000000
+      internalID: -7299751367757597415
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LockersHorizSeamless_0: -4766476954653860968
+      TileFloor2_0: -7299751367757597415
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
