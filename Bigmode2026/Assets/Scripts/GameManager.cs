@@ -1,19 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// public enum ObstacleDifficulty
-// {
-//     Easy,
-//     Medium,
-//     Hard
-// }
+public enum ObstacleDifficulty
+{
+    Easy,
+    Medium,
+    Hard
+}
 
 
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PoolManager poolManager;
-    
+
+    [Header("Obstacle Lists")]
+    [SerializeField] private List<ObstacleInfo> easyObstacles;
+    [SerializeField] private List<ObstacleInfo> mediumObstacles;
+    [SerializeField] private List<ObstacleInfo> hardObstacles;
+
     private RunTimer runTimer; 
 
     // Obstacle variables
@@ -23,7 +28,6 @@ public class GameManager : MonoBehaviour
 
     private float spawnInterval; // The rate at which obstacles are spawned  (objects/second)
     private float timeSinceLastObstacle; // The Time.deltaTime since the last obstacle was spawned
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -68,23 +72,44 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // public ObstacleDifficulty PickObstacleDifficulty(float t)
-    // {
-    //     if (t < 20f) return ObstacleDifficulty.Easy;
+    public ObstacleDifficulty PickObstacleDifficulty(float t)
+    {
+        if (t < 10f) return ObstacleDifficulty.Easy;
 
-    //     if (t < 45f)
-    //         return Random.value < 0.7f ? ObstacleDifficulty.Easy : ObstacleDifficulty.Medium;
-
-    //     float r = Random.value;
-    //     if (r < 0.5f) return ObstacleDifficulty.Medium;
-    //     if (r < 0.85f) return ObstacleDifficulty.Hard;
-    //     return ObstacleDifficulty.Easy;
-    // }
+        if (t < 25f)
+            return Random.value < 0.7f ? ObstacleDifficulty.Easy : ObstacleDifficulty.Medium;
+        
+        float r = Random.value;
+        if (r < 0.5f) return ObstacleDifficulty.Medium; // 50%
+        if (r < 0.85f) return ObstacleDifficulty.Hard;  // 35%
+        return ObstacleDifficulty.Easy;                 // 15%
+    }
 
     private void GenerateObstacles()
     {
-        //TODO: Choose an obstacle pool to spawn from
-        ObstacleType obstacleType = (Random.value >= 0.5f) ? ObstacleType.SmallSquare : ObstacleType.Basketball;
+        // Choose an obstacle to spawn
+        ObstacleDifficulty difficulty = PickObstacleDifficulty(runTimer.runTime);
+        ObstacleType obstacleType;
+        switch(difficulty)
+        {
+            case ObstacleDifficulty.Easy:
+                int i = Random.Range(0, easyObstacles.Count);
+                obstacleType = easyObstacles[i].type; // Get a random easy obstacle
+                break;
+            case ObstacleDifficulty.Medium:
+                i = Random.Range(0, mediumObstacles.Count);
+                obstacleType = mediumObstacles[i].type; // Get a random easy obstacle
+                break;
+            case ObstacleDifficulty.Hard:
+                i = Random.Range(0, hardObstacles.Count);
+                obstacleType = hardObstacles[i].type; // Get a random easy obstacle
+                break;
+            default: 
+                i = Random.Range(0, easyObstacles.Count);
+                obstacleType = easyObstacles[i].type; // Get a random easy obstacle
+                break;
+            
+        }
         
         // Spawning obstacles 
         GameObject obstacle = poolManager.GetObstacle(obstacleType);
