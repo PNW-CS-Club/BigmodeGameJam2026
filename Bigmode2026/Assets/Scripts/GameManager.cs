@@ -1,20 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// public enum ObstacleDifficulty
+// {
+//     Easy,
+//     Medium,
+//     Hard
+// }
+
+
 public class GameManager : MonoBehaviour
 {
-    private RunTimer runTimer; 
+    [Header("References")]
+    [SerializeField] private PoolManager poolManager;
     
-    // Obstacle prefabs
-    public GameObject smallSquare;
-    public GameObject smallTriangle;
-
-    // Obstacle list
-    private List<GameObject> obstaclePrefabs = new();
+    private RunTimer runTimer; 
 
     // Obstacle variables
-    public int numberOfObstacles = 0; // The current number of obstacles in the scene
-    public int maxObstacles = 5; // The maximum number of obstacles allowed in the scene
     private Vector3 pos; // Position of the obstacle
     private Quaternion rot; // Rotation of the obstacle
     private float angleDegrees; // Angle of the obstacle in degrees
@@ -26,10 +28,6 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Populate Obstacle Prefabs list
-        obstaclePrefabs.Add(smallSquare);
-        obstaclePrefabs.Add(smallTriangle);
-
         // Set up Run Timer
         runTimer = GetComponent<RunTimer>();
         
@@ -53,9 +51,6 @@ public class GameManager : MonoBehaviour
             GenerateObstacles();
             timeSinceLastObstacle = 0f; // reset timer
         }
-
-        //TODO: Delete obstacles that reach the bottom of the scene
-        // Place a trigger below the visible screen that deactivates objects when they collide
     }
 
     /** FixedUpdate is called at fixed time intervals, synchronized with the physics system.
@@ -73,44 +68,46 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // public ObstacleDifficulty PickObstacleDifficulty(float t)
+    // {
+    //     if (t < 20f) return ObstacleDifficulty.Easy;
+
+    //     if (t < 45f)
+    //         return Random.value < 0.7f ? ObstacleDifficulty.Easy : ObstacleDifficulty.Medium;
+
+    //     float r = Random.value;
+    //     if (r < 0.5f) return ObstacleDifficulty.Medium;
+    //     if (r < 0.85f) return ObstacleDifficulty.Hard;
+    //     return ObstacleDifficulty.Easy;
+    // }
+
     private void GenerateObstacles()
     {
-        // Pick a random obstacle from obstaclePrefabs
-        int index = Random.Range(0,obstaclePrefabs.Count);
-        GameObject randomObstacle = obstaclePrefabs[index];
-
+        //TODO: Choose an obstacle pool to spawn from
+        ObstacleType obstacleType = (Random.value >= 0.5f) ? ObstacleType.SmallSquare : ObstacleType.Basketball;
+        
+        // Spawning obstacles 
+        GameObject obstacle = poolManager.GetObstacle(obstacleType);
 
         // Give the obstacle a random start position from the top
-        pos = transform.position + new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
+        obstacle.transform.position = new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
 
-        //TODO: Give the object a random rotation
-        angleDegrees = 0f;
-        rot = Quaternion.Euler(0, 0, angleDegrees);
-
-        // Instantiate the obstacle
-        if(numberOfObstacles < maxObstacles){
-            randomObstacle = Instantiate(randomObstacle, pos, rot);
-            ++numberOfObstacles;
-        }
 
         // Give the obstacle a random initial velocity
-        Rigidbody2D rb = randomObstacle.GetComponent<Rigidbody2D>();
-        if (rb != null) 
-        {
-            int direction = Random.Range(0,3); // min inclusive, max exclusive
-            float obstacleSpeed = Random.Range(0f,5f);
-            
-            if (direction == 0) {
+        Rigidbody2D rb = obstacle.GetComponent<Rigidbody2D>();
+        int direction = Random.Range(0,2);
+        float obstacleSpeed = Random.Range(0f,5f);
+        if(rb != null){
+            if(direction == 0){
                 // Set the velocity left
                 rb.linearVelocity = Vector3.left * obstacleSpeed;
-            } else if (direction == 1) {
+            } else if (direction == 1){
                 // Set the velocity right
                 rb.linearVelocity = Vector3.right * obstacleSpeed;
-            } else {
+            } else{
                 // Set the velocity straight down
                 rb.linearVelocity = Vector3.down * obstacleSpeed;
-            }
-            
+            } 
         }
     }
 }
