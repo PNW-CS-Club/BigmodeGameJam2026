@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5457340212358394218}
   - component: {fileID: 4193287505518064137}
   - component: {fileID: 6050707635504321953}
-  - component: {fileID: -3650151181288682929}
+  - component: {fileID: -8903115151917056795}
   m_Layer: 0
   m_Name: SmallSquare
   m_TagString: Obstacle
@@ -166,7 +166,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-3650151181288682929
+--- !u!114 &-8903115151917056795
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,8 +175,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1462605033370219205}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 374ac933240c472fbf09d1b336934752, type: 3}
+  m_Script: {fileID: 11500000, guid: 46749e0e8a0687543bf229b9566024fb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObstacleInfo
-  prefab: {fileID: 1462605033370219205}
-  type: 1
+  m_EditorClassIdentifier: Assembly-CSharp::Obstacle
+  info: {fileID: 11400000, guid: 0049b21e525e9634f977738d21c81850, type: 2}

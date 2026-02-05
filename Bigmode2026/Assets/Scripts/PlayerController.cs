@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
 
     [SerializeField, Min(0.01f)] private float moveForce;
-    [FormerlySerializedAs("maxVelocity")] [SerializeField, Min(0.01f)] private float maxSpeed;
+    [SerializeField, Min(0.01f)] private float maxSpeed;
     [SerializeField, Min(1f)] private float decelerationBonus;
     
 
@@ -55,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
         var force = xInput * moveForce * Time.fixedDeltaTime;
         if (rb.linearVelocityX * xInput < 0) {
-            // is decelerating; should be easier than accelerating
+            // the player should decelerate faster than they accelerate
             force *= decelerationBonus;
         }
 

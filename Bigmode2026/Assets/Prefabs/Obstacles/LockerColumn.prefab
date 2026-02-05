@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5243573791581527096}
   - component: {fileID: 1273156998944997550}
   - component: {fileID: 7355657325246986683}
-  - component: {fileID: 8763119422917019513}
+  - component: {fileID: 3124663593842452406}
   m_Layer: 0
   m_Name: LockerColumn
   m_TagString: Obstacle
@@ -138,7 +138,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 4}
   m_EdgeRadius: 0
---- !u!114 &8763119422917019513
+--- !u!114 &3124663593842452406
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,8 +147,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4349257096488106931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 374ac933240c472fbf09d1b336934752, type: 3}
+  m_Script: {fileID: 11500000, guid: 46749e0e8a0687543bf229b9566024fb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObstacleInfo
-  prefab: {fileID: 4349257096488106931}
-  type: 3
+  m_EditorClassIdentifier: Assembly-CSharp::Obstacle
+  info: {fileID: 11400000, guid: 82843569e67fa9f40bd8cf468dbada20, type: 2}
