@@ -6,8 +6,6 @@ public class ObstacleScroller : MonoBehaviour
     public float despawnYPos;
     private float distanceTraveled = 0; 
     
-    [SerializeField] PoolManager poolManager;
-    
     private void Update() 
     {
         float distanceDelta = Time.deltaTime * scrollSpeed;
@@ -20,7 +18,7 @@ public class ObstacleScroller : MonoBehaviour
             child.Translate(Vector2.down * distanceDelta, Space.World);
 
             if (child.position.y < despawnYPos) {
-                poolManager.TryRelease(child.gameObject);
+                Destroy(child.gameObject);
             }
         }
     }

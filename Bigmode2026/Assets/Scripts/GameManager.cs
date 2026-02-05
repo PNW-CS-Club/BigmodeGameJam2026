@@ -1,18 +1,18 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-
-// public enum ObstacleDifficulty
-// {
-//     Easy,
-//     Medium,
-//     Hard
-// }
 
 
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private PoolManager poolManager;
+    
+    [SerializeField]  private ObstacleInfo[] easyObstacles;
+    [SerializeField]  private ObstacleInfo[] mediumObstacles;
+    [SerializeField]  private ObstacleInfo[] hardObstacles;
+    [SerializeField]  private ObstacleInfo[] collectables;
+    
+    [SerializeField] private TMP_Text scoreText;
     
     private RunTimer runTimer; 
 
@@ -24,17 +24,23 @@ public class GameManager : MonoBehaviour
     private float spawnInterval; // The rate at which obstacles are spawned  (objects/second)
     private float timeSinceLastObstacle; // The Time.deltaTime since the last obstacle was spawned
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    public int Score { get; private set; } = 0; 
+    
+    void Start() {
+        scoreText.text = "POINTS: " + Score;
+        
         // Set up Run Timer
         runTimer = GetComponent<RunTimer>();
         
         StartRun();
     }
+    
+    public void AddPoints(int points)
+    {
+        Score += points;
+        scoreText.text = "POINTS: " + Score;
+    }
 
-    // Update is called once per frame
     void Update()
     {
         if(runTimer == null) return;
@@ -53,14 +59,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /** FixedUpdate is called at fixed time intervals, synchronized with the physics system.
-    *   Use for physics related calculations
-    */
-    void FixedUpdate()
-    {
-        
-    }
-
     private void StartRun(){
         // Set up Obstacle Spawn Timer
         timeSinceLastObstacle = 0f;
@@ -68,26 +66,50 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // public ObstacleDifficulty PickObstacleDifficulty(float t)
-    // {
-    //     if (t < 20f) return ObstacleDifficulty.Easy;
+    // currently never returns collectable
+    public ObstacleDifficulty PickObstacleDifficulty(float t)
+    {
+        if (t < 4f) return ObstacleDifficulty.Collectable;
+        
+        if (t < 20f) return ObstacleDifficulty.Easy;
 
-    //     if (t < 45f)
-    //         return Random.value < 0.7f ? ObstacleDifficulty.Easy : ObstacleDifficulty.Medium;
+        if (t < 45f)
+            return Random.value < 0.7f ? ObstacleDifficulty.Easy : ObstacleDifficulty.Medium;
 
-    //     float r = Random.value;
-    //     if (r < 0.5f) return ObstacleDifficulty.Medium;
-    //     if (r < 0.85f) return ObstacleDifficulty.Hard;
-    //     return ObstacleDifficulty.Easy;
-    // }
+        float r = Random.value;
+        if (r < 0.5f) return ObstacleDifficulty.Medium;
+        if (r < 0.85f) return ObstacleDifficulty.Hard;
+        return ObstacleDifficulty.Easy;
+    }
 
     private void GenerateObstacles()
     {
         //TODO: Choose an obstacle pool to spawn from
-        ObstacleType obstacleType = (Random.value >= 0.5f) ? ObstacleType.SmallSquare : ObstacleType.Basketball;
+        var difficulty = PickObstacleDifficulty(runTimer.runTime);
+        ObstacleInfo[] arr;
+        
+        switch (difficulty) {
+            case ObstacleDifficulty.Easy:
+                arr = easyObstacles;
+                break;
+            case ObstacleDifficulty.Medium:
+                arr = mediumObstacles;
+                break;
+            case ObstacleDifficulty.Hard:
+                arr = hardObstacles;
+                break;
+            case ObstacleDifficulty.Collectable: default:
+                arr = collectables;
+                break;
+        }
         
         // Spawning obstacles 
-        GameObject obstacle = poolManager.GetObstacle(obstacleType);
+        var info = arr[Random.Range(0, arr.Length)];
+        GameObject obstacle = Instantiate(info.prefab, transform);
+
+        if (difficulty == ObstacleDifficulty.Collectable) {
+            obstacle.GetComponent<Collectable>().gameManager = this;
+        }
 
         // Give the obstacle a random start position from the top
         obstacle.transform.position = new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
@@ -95,7 +117,7 @@ public class GameManager : MonoBehaviour
 
         // Give the obstacle a random initial velocity
         Rigidbody2D rb = obstacle.GetComponent<Rigidbody2D>();
-        int direction = Random.Range(0,2);
+        int direction = Random.Range(0,3);
         float obstacleSpeed = Random.Range(0f,5f);
         if(rb != null){
             if(direction == 0){
