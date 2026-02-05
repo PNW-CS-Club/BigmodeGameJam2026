@@ -1,21 +1,20 @@
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UI;
 using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text scoreText;
-    private int score = 0;
-    void Start()
-    {
-        
-        scoreText.text = "POINTS: " + score.ToString();
+    
+    // can only be set from inside this class
+    public int Score { get; private set; } = 0; 
+    
+    void Start() {
+        scoreText.text = "POINTS: " + Score;
     }
 
-    public void addPoints()
+    public void AddPoints(int points)
     {
-        score += 10;
-        scoreText.text = "POINTS: " + score.ToString();;
+        Score += points;
+        scoreText.text = "POINTS: " + Score;
     }
 }

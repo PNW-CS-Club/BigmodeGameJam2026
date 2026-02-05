@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject smallTriangle;
 
     // Obstacle list
-    private List<GameObject> obstaclePrefabs = new List<GameObject>();
+    private List<GameObject> obstaclePrefabs = new();
 
     // Obstacle variables
     public int numberOfObstacles = 0; // The current number of obstacles in the scene
@@ -95,16 +95,18 @@ public class GameManager : MonoBehaviour
 
         // Give the obstacle a random initial velocity
         Rigidbody2D rb = randomObstacle.GetComponent<Rigidbody2D>();
-        int direction = Random.Range(0,2);
-        float obstacleSpeed = Random.Range(0f,5f);
-        if(rb != null){
-            if(direction == 0){
+        if (rb != null) 
+        {
+            int direction = Random.Range(0,3); // min inclusive, max exclusive
+            float obstacleSpeed = Random.Range(0f,5f);
+            
+            if (direction == 0) {
                 // Set the velocity left
                 rb.linearVelocity = Vector3.left * obstacleSpeed;
-            } else if (direction == 1){
+            } else if (direction == 1) {
                 // Set the velocity right
                 rb.linearVelocity = Vector3.right * obstacleSpeed;
-            } else{
+            } else {
                 // Set the velocity straight down
                 rb.linearVelocity = Vector3.down * obstacleSpeed;
             }

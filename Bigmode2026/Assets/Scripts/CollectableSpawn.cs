@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CollectableSpawn : MonoBehaviour
@@ -22,14 +21,14 @@ public class CollectableSpawn : MonoBehaviour
         if(timeSinceLastCoinSpawn >= spawnInterval)
         {
             //spawn in the bonus collectable
-            spawnInObject();
+            SpawnObject();
             timeSinceLastCoinSpawn = 0;
         }
     }
 
-    void spawnInObject()
+    void SpawnObject()
     {
-        // Gives object a random postion
+        // Gives object a random position
         pos = new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
 
         // Instantiate the collectable object
