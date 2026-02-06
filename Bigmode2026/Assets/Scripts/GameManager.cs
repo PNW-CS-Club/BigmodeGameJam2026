@@ -80,11 +80,11 @@ public class GameManager : MonoBehaviour
     {
         if (t < 5f) return ObstacleDifficulty.Easy;
         
-        if (t < 10f) return ObstacleDifficulty.Medium;
-
+        if (t < 15f) return Random.value < 0.7f ? ObstacleDifficulty.Easy : ObstacleDifficulty.Medium;
+        
         float r = Random.value;
-        if (r < 0.5f) return ObstacleDifficulty.Medium;
-        if (r < 0.85f) return ObstacleDifficulty.Hard;
+        if (r < 0.4f) return ObstacleDifficulty.Medium;
+        if (r < 0.6f) return ObstacleDifficulty.Hard;
         return ObstacleDifficulty.Easy;
     }
 
