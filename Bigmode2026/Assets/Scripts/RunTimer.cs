@@ -27,6 +27,7 @@ public class RunTimer : MonoBehaviour
         
         isRunning = false;
         Debug.Log("Final Time: " + runTime);
+        Time.timeScale = 0f;
     }
 
     public void PauseRun()
