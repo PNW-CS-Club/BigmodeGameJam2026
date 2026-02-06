@@ -17,7 +17,6 @@ public class RunTimer : MonoBehaviour
     public void StartRun()
     {
         if(isRunning) return; // Prevent accidental double calls
-
         runTime = 0f;
         isRunning = true;
     }
@@ -28,5 +27,10 @@ public class RunTimer : MonoBehaviour
         
         isRunning = false;
         Debug.Log("Final Time: " + runTime);
+    }
+
+    public void PauseRun()
+    {
+        isRunning = false;
     }
 }
