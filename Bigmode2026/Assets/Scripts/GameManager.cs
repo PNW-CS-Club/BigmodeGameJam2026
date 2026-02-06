@@ -58,9 +58,11 @@ public class GameManager : MonoBehaviour
             GenerateObstacles();
             timeSinceLastObstacle = 0f; // reset timer
         }
-
+        // Generate an obstacle every second
         if(timeSinceLastCollectable >= 1f){
             GenerateCollectables();
+            // Add points every second
+            AddPoints(5);
             timeSinceLastCollectable = 0f; // reset timer
         }
     }
@@ -69,6 +71,7 @@ public class GameManager : MonoBehaviour
         // Set up Obstacle Spawn Timer
         timeSinceLastObstacle = 0f;
         timeSinceLastCollectable = 0f;
+        Score = 0;
         runTimer.StartRun(); // runTimer.isRunning -> true
 
     }

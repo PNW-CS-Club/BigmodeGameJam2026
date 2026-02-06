@@ -15,4 +15,4 @@ MonoBehaviour:
   prefab: {fileID: 1462605033370219205, guid: 7f95b156db843984b9afbe8db4be55eb, type: 3}
   type: 1
   difficulty: 0
-  unitLength: 0.5
+  unitLength: 1
