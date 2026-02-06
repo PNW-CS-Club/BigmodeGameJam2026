@@ -112,23 +112,29 @@ public class GameManager : MonoBehaviour
         }
 
         // Give the obstacle a random start position from the top
-        obstacle.transform.position = new Vector3(Random.Range(-10.0f,10.0f), 7f, 0);
+        float obstacleLength = info.unitLength;
+        // Round the x position to the nearest unit / Spawn object at y = 10 / z = 0
+        float xPos = Mathf.Round(Random.Range(-11.0f+obstacleLength/2f, 11.0f-obstacleLength/2f));
+        // Round the y position to the nearest unit in relation to the floor
+        obstacle.transform.position = new Vector3(xPos, 10f, 0);
 
 
         // Give the obstacle a random initial velocity
         Rigidbody2D rb = obstacle.GetComponent<Rigidbody2D>();
         int direction = Random.Range(0,3);
-        float obstacleSpeed = Random.Range(0f,5f);
+        float obstacleSpeed = Random.Range(3f,7f);
         if(rb != null){
             if(direction == 0){
-                // Set the velocity left
-                rb.linearVelocity = Vector3.left * obstacleSpeed;
+                // Set the velocity left and down
+                rb.linearVelocity += Vector2.left * obstacleSpeed;
+                rb.linearVelocity += Vector2.down * obstacleSpeed;
             } else if (direction == 1){
-                // Set the velocity right
-                rb.linearVelocity = Vector3.right * obstacleSpeed;
+                // Set the velocity right and down
+                rb.linearVelocity += Vector2.right * obstacleSpeed;
+                rb.linearVelocity += Vector2.down * obstacleSpeed;
             } else{
                 // Set the velocity straight down
-                rb.linearVelocity = Vector3.down * obstacleSpeed;
+                rb.linearVelocity += Vector2.down * obstacleSpeed;
             } 
         }
     }
