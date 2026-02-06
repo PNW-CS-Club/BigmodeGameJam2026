@@ -127,7 +127,11 @@ public class GameManager : MonoBehaviour
         // Give the obstacle a random start position from the top
         float obstacleLength = obstacle.GetComponent<ObstacleInfo>().unitLength;
         // Round the x position to the nearest unit / Spawn object at y = 10 / z = 0
-        obstacle.transform.position = new Vector3(Mathf.Round(Random.Range(-11.0f+obstacleLength/2f, 11.0f-obstacleLength/2f)), 10f, 0);
+        float xPos = Mathf.Round(Random.Range(-11.0f+obstacleLength/2f, 11.0f-obstacleLength/2f));
+        // Round the y position to the nearest unit in relation to the floor
+        
+        
+        obstacle.transform.position = new Vector3(xPos, 10f, 0);
         
 
 
