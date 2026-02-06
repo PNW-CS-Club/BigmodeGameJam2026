@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     private float spawnInterval; // The rate at which obstacles are spawned  (objects/second)
     private float timeSinceLastObstacle; // The Time.deltaTime since the last obstacle was spawned
+    private float timeSinceLastCollectable; // The Time.deltaTime since the last collectable was spawned
 
     public int Score { get; private set; } = 0; 
     
@@ -47,9 +48,9 @@ public class GameManager : MonoBehaviour
         if(!runTimer.isRunning) return; // game paused or game ended
 
         timeSinceLastObstacle += Time.deltaTime; // increment with time
+        timeSinceLastCollectable += Time.deltaTime;
 
         // Generate obstacles
-        // Note: Can use AnimationCurve in the future if we want to be fancy
         spawnInterval = Mathf.Max(0.4f, 2.0f - runTimer.runTime * 0.01f); // obstacles per second
         
         if(timeSinceLastObstacle >= spawnInterval){
@@ -57,24 +58,26 @@ public class GameManager : MonoBehaviour
             GenerateObstacles();
             timeSinceLastObstacle = 0f; // reset timer
         }
+
+        if(timeSinceLastCollectable >= 1f){
+            GenerateCollectables();
+            timeSinceLastCollectable = 0f; // reset timer
+        }
     }
 
     private void StartRun(){
         // Set up Obstacle Spawn Timer
         timeSinceLastObstacle = 0f;
+        timeSinceLastCollectable = 0f;
         runTimer.StartRun(); // runTimer.isRunning -> true
 
     }
 
-    // currently never returns collectable
     public ObstacleDifficulty PickObstacleDifficulty(float t)
     {
-        if (t < 4f) return ObstacleDifficulty.Collectable;
+        if (t < 5f) return ObstacleDifficulty.Easy;
         
-        if (t < 20f) return ObstacleDifficulty.Easy;
-
-        if (t < 45f)
-            return Random.value < 0.7f ? ObstacleDifficulty.Easy : ObstacleDifficulty.Medium;
+        if (t < 10f) return ObstacleDifficulty.Medium;
 
         float r = Random.value;
         if (r < 0.5f) return ObstacleDifficulty.Medium;
@@ -84,7 +87,7 @@ public class GameManager : MonoBehaviour
 
     private void GenerateObstacles()
     {
-        //TODO: Choose an obstacle pool to spawn from
+        // Choose an obstacle pool to spawn from
         var difficulty = PickObstacleDifficulty(runTimer.runTime);
         ObstacleInfo[] arr;
         
@@ -98,8 +101,8 @@ public class GameManager : MonoBehaviour
             case ObstacleDifficulty.Hard:
                 arr = hardObstacles;
                 break;
-            case ObstacleDifficulty.Collectable: default:
-                arr = collectables;
+            default:
+                arr = easyObstacles;
                 break;
         }
         
@@ -107,15 +110,12 @@ public class GameManager : MonoBehaviour
         var info = arr[Random.Range(0, arr.Length)];
         GameObject obstacle = Instantiate(info.prefab, transform);
 
-        if (difficulty == ObstacleDifficulty.Collectable) {
-            obstacle.GetComponent<Collectable>().gameManager = this;
-        }
-
         // Give the obstacle a random start position from the top
         float obstacleLength = info.unitLength;
         // Round the x position to the nearest unit / Spawn object at y = 10 / z = 0
         float xPos = Mathf.Round(Random.Range(-11.0f+obstacleLength/2f, 11.0f-obstacleLength/2f));
         // Round the y position to the nearest unit in relation to the floor
+
         obstacle.transform.position = new Vector3(xPos, 10f, 0);
 
 
@@ -137,5 +137,20 @@ public class GameManager : MonoBehaviour
                 rb.linearVelocity += Vector2.down * obstacleSpeed;
             } 
         }
+    }
+
+    private void GenerateCollectables(){
+        var info = collectables[Random.Range(0, collectables.Length)];
+        GameObject collectable = Instantiate(info.prefab, transform);
+
+        collectable.GetComponent<Collectable>().gameManager = this;
+
+        // Give the collectable a random start position from the top
+        float collectableLength = info.unitLength;
+        // Round the x position to the nearest unit / Spawn object at y = 10 / z = 0
+        float xPos = Mathf.Round(Random.Range(-11.0f+collectableLength/2f, 11.0f-collectableLength/2f));
+        // Round the y position to the nearest unit in relation to the floor
+
+        collectable.transform.position = new Vector3(xPos, 10f, 0);
     }
 }
