@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleInfo
   prefab: {fileID: 1462605033370219205, guid: 7f95b156db843984b9afbe8db4be55eb, type: 3}
   type: 1
-  isCollectable: 0
+  difficulty: 0
+  unitLength: 1

@@ -9,6 +9,6 @@ public class Collectable : MonoBehaviour
         
         gameManager.AddPoints(10);
         Debug.Log("You collected the coin");
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
