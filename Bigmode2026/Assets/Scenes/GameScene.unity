@@ -941,11 +941,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   easyObstacles:
-  - {fileID: 11400000, guid: 75f35cf19ecc7be488e3e008b21dde06, type: 2}
-  - {fileID: 11400000, guid: 0049b21e525e9634f977738d21c81850, type: 2}
-  - {fileID: 11400000, guid: 53693f9a8b2f87b4e847e9f65f8d38c4, type: 2}
+  - {fileID: 11400000, guid: 0eca998e54e31044f87e0ff3c7aeefc9, type: 2}
+  - {fileID: 11400000, guid: 2f668ee550e169946af4cf2767a92b34, type: 2}
+  - {fileID: 11400000, guid: 7d749663fc1efc7429a1344f7feb09ca, type: 2}
   mediumObstacles:
   - {fileID: 11400000, guid: 82843569e67fa9f40bd8cf468dbada20, type: 2}
+  - {fileID: 11400000, guid: 53693f9a8b2f87b4e847e9f65f8d38c4, type: 2}
   hardObstacles:
   - {fileID: 11400000, guid: da482e9abc3315542b32454cb26cbb93, type: 2}
   collectables:

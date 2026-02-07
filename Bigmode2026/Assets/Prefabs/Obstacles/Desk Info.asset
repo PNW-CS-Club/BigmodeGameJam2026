@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 374ac933240c472fbf09d1b336934752, type: 3}
-  m_Name: Square Info
+  m_Name: Desk Info
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleInfo
-  prefab: {fileID: 1462605033370219205, guid: 7f95b156db843984b9afbe8db4be55eb, type: 3}
-  type: 1
-  difficulty: 0
+  prefab: {fileID: 334383477585809724, guid: 2c43165e89174154fabcfb66eba213f8, type: 3}
   unitLength: 1
