@@ -1621,6 +1621,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &997584874 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5580291005286898994, guid: 8066fe5e7656d8444abb5890b013a8f9, type: 3}
+  m_PrefabInstance: {fileID: 1756671921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1038903178
 GameObject:
   m_ObjectHideFlags: 0
@@ -1952,10 +1957,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1038903179}
   - {fileID: 1622652160}
   - {fileID: 2145149638}
   - {fileID: 793858316}
-  - {fileID: 1038903179}
   m_Father: {fileID: 217423675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2665,6 +2670,10 @@ PrefabInstance:
       value: EndMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8880900030714372068, guid: a45bcbf9186d05a458d68ab0072c550c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: HELP
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880900030714372068, guid: a45bcbf9186d05a458d68ab0072c550c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
@@ -2796,7 +2805,7 @@ MonoBehaviour:
   gameManager: {fileID: 1489883216}
   endPanel: {fileID: 217423674}
   endMenuUI: {fileID: 1307459740}
-  optionsMenuUI: {fileID: 2145149639}
+  optionsMenuUI: {fileID: 997584874}
 --- !u!1001 &1756671921
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3465,11 +3474,6 @@ PrefabInstance:
 --- !u!224 &2145149638 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2668097039484744518, guid: a45bcbf9186d05a458d68ab0072c550c, type: 3}
-  m_PrefabInstance: {fileID: 2145149637}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2145149639 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7149742173482547046, guid: a45bcbf9186d05a458d68ab0072c550c, type: 3}
   m_PrefabInstance: {fileID: 2145149637}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1913614443524751356

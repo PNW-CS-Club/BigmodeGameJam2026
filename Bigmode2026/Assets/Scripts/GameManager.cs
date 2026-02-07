@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour
         runTimer.StartRun(); // runTimer.isRunning -> true
 
         player.ResetPlayer();
+        Time.timeScale = 1f;
     }
 
     private void EndRun()
