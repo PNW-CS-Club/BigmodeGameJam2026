@@ -14,9 +14,12 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    [SerializeField] private float startYPos;
     [SerializeField, Min(0.01f)] private float moveForce;
     [SerializeField, Min(0.01f)] private float maxSpeed;
     [SerializeField, Min(1f)] private float decelerationBonus;
+    
+    private bool canControl = true;
     
 
     void Awake() {
@@ -42,6 +45,12 @@ public class PlayerController : MonoBehaviour
         return action;
     }
 
+    public void ResetPlayer() {
+        transform.position = new Vector3(0f, startYPos, 0f);
+        canControl = true;
+        rb.linearVelocity = Vector2.zero;
+    }
+
     void Update() {
         // Get all input in Update, but don't modify physics in Update 
         var left = leftAction.ReadValue<float>();
@@ -51,6 +60,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate() {
         // Only modify physics in FixedUpdate
+        
+        if (!canControl) return;
 
         var force = xInput * moveForce * Time.fixedDeltaTime;
         if (rb.linearVelocityX * xInput < 0) {
@@ -67,13 +78,14 @@ public class PlayerController : MonoBehaviour
         else if (rb.linearVelocityX < -maxSpeed) {
             rb.linearVelocityX = -maxSpeed;
         }
+
+        rb.linearVelocityY = 0f;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
         if (!collision.gameObject.CompareTag("Obstacle")) return;
         
+        canControl = false;
         SendMessageUpwards("EndRun");
-        
-      
     }
 }

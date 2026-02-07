@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]  private ObstacleInfo[] collectables;
     
     [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private PlayerController player;
     
     private RunTimer runTimer; 
 
@@ -25,12 +26,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float pointsPerSecond = 5f;
     public float Score { get; private set; } = 0f;
 
-    void Start() {
-        scoreText.text = "POINTS: " + (int)Score;
-        
-        // Set up Run Timer
+    void Awake() {
         runTimer = GetComponent<RunTimer>();
-        
+    }
+    
+    void Start() {
         StartRun();
     }
 
@@ -61,21 +61,35 @@ public class GameManager : MonoBehaviour
         scoreText.text = "POINTS: " + (int)Score;
     }
 
-    private void StartRun(){
+    public void ResetRun() {
+        /*  // Reload the game scene (This is kind of harsh, we may want to clean the scene instead or add a delay before the new game starts)
+        _ = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);  */
+        
+        foreach (Transform child in transform) {
+            if (child.CompareTag("Obstacle")) {
+                Destroy(child.gameObject);
+            }
+        }
+        
+        StartRun();
+    }
+
+    private void StartRun() {
         // Reset timers
         timeSinceLastObstacle = 0f;
         timeSinceLastCollectable = 0f;
         // Reset Score
         Score = 0;
-        scoreText.text = "POINTS: " + (int)Score; // reset score display
+        scoreText.text = "POINTS: " + (int)Score;
         // Start a new run
         runTimer.StartRun(); // runTimer.isRunning -> true
 
+        player.ResetPlayer();
     }
 
     private void EndRun()
     {
-        Debug.Log("You hit an obstacle!");
+        runTimer.EndRun();
     }
 
     private ObstacleDifficulty PickObstacleDifficulty(float t)
@@ -154,11 +168,5 @@ public class GameManager : MonoBehaviour
         // Round the y position to the nearest unit in relation to the floor
 
         collectable.transform.position = new Vector3(xPos, 10f, 0);
-    }
-
-    private void NewRun()
-    {
-        // Reload the game scene (This is kind of harsh, we may want to clean the scene instead or add a delay before the new game starts)
-        _ = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex); 
     }
 }

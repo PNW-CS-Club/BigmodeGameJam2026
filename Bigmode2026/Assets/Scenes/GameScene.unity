@@ -1961,12 +1961,24 @@ MonoBehaviour:
   collectables:
   - {fileID: 11400000, guid: 2e65b82ddefa4244aaca88b689ef76d8, type: 2}
   scoreText: {fileID: 787194606}
+  player: {fileID: 1768974951}
   pointsPerSecond: 5
 --- !u!4 &1768974948 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4153928190441869324, guid: 3d4bf6e086bd82b45ab5b67b431e08da, type: 3}
   m_PrefabInstance: {fileID: 3150360590064690667}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1768974951 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6079327125883726156, guid: 3d4bf6e086bd82b45ab5b67b431e08da, type: 3}
+  m_PrefabInstance: {fileID: 3150360590064690667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce5bf9b23504b954f810b3079da4f69d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!1 &1961382827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,6 +2233,10 @@ PrefabInstance:
     - target: {fileID: 4153928190441869324, guid: 3d4bf6e086bd82b45ab5b67b431e08da, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079327125883726156, guid: 3d4bf6e086bd82b45ab5b67b431e08da, type: 3}
+      propertyPath: startYPos
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 6676869439306354903, guid: 3d4bf6e086bd82b45ab5b67b431e08da, type: 3}
       propertyPath: m_Size.x
