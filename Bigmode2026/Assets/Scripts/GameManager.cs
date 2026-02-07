@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
     public void ResetRun() 
     {
         foreach (Transform child in transform) {
-            if (child.CompareTag("Obstacle")) {
+            if (child.CompareTag("Obstacle") || child.CompareTag("Collectable")) {
                 Destroy(child.gameObject);
             }
         }
