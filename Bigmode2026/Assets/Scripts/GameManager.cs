@@ -61,7 +61,14 @@ public class GameManager : MonoBehaviour
                 endMenu.ActivateMenu();
 
                 // move the high score text and current score text
-
+                scoreText.alignment = TextAlignmentOptions.Center;
+                highScoreText.alignment = TextAlignmentOptions.Center;
+                scoreText.transform.localPosition = new Vector2(165,280);
+                highScoreText.transform.localPosition = new Vector2(165, 400);
+                scoreText.color = Color.white;
+                highScoreText.color = Color.white;
+                scoreText.fontSize = 64f;
+                highScoreText.fontSize = 64f;
                 
             }
 
