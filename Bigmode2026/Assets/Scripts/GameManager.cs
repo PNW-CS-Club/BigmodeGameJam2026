@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public float Score { get; private set; } = 0f;
 
     void Awake() {
-        runTimer = GetComponent<RunTimer>();
+        runTimer = GetComponent<RunTimer>();    
     }
     
     void Start() {
@@ -90,6 +90,10 @@ public class GameManager : MonoBehaviour
     private void EndRun()
     {
         runTimer.EndRun();
+        if( Score >= HighScore.Instance.GetScore()){
+            HighScore.Instance.SetScore(Score);
+            Debug.Log("New High Score: " + HighScore.Instance.GetScore());
+        }
     }
 
     private ObstacleDifficulty PickObstacleDifficulty(float t)
