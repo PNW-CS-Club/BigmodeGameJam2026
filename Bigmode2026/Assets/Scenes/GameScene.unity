@@ -1859,6 +1859,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 53693f9a8b2f87b4e847e9f65f8d38c4, type: 2}
   hardObstacles:
   - {fileID: 11400000, guid: da482e9abc3315542b32454cb26cbb93, type: 2}
+  - {fileID: 11400000, guid: 0942c744e73df16429c6c7e2e62eda4a, type: 2}
   collectables:
   - {fileID: 11400000, guid: 2e65b82ddefa4244aaca88b689ef76d8, type: 2}
   scoreText: {fileID: 787194606}
