@@ -13,11 +13,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]  private ObstacleInfo[] collectables;
     
     [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text highScoreText;
     [SerializeField] private PlayerController player;
     
     private RunTimer runTimer;
 
+    // End menu variables
     private GameObject gameEndCanvas;
+    private EndMenu endMenu;
 
     private bool doingEndAnimation;
     private float endAnimationTimer;
@@ -30,10 +33,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float pointsPerSecond = 5f;
     public float Score { get; private set; } = 0f;
+    //ublic float HScore {get; private set; } = 0f;
 
     void Awake() {
         runTimer = GetComponent<RunTimer>();    
         gameEndCanvas = GameObject.Find("GameEndCanvas");
+        endMenu = gameEndCanvas.GetComponent<EndMenu>();
     }
     
     void Start() {
@@ -51,9 +56,13 @@ public class GameManager : MonoBehaviour
             else {
                 Time.timeScale = 0f;
                 doingEndAnimation = false;
-                // make end menu appear here
-                var endMenu = gameEndCanvas.GetComponent<EndMenu>();
+    
+                // make end menu appear
                 endMenu.ActivateMenu();
+
+                // move the high score text and current score text
+
+                
             }
 
             return;
@@ -81,7 +90,11 @@ public class GameManager : MonoBehaviour
         
         // Add points and update score text constantly
         Score += Time.deltaTime * pointsPerSecond;
-        scoreText.text = "POINTS: " + (int)Score;
+        scoreText.text = "SCORE: " + (int)Score;
+        // Update high score text too if score is greater than high score
+        if(Score > HighScore.Instance.GetScore()){
+            highScoreText.text = "BEST: " + (int)Score;
+        }
     }
 
     public void ResetRun() 
@@ -101,7 +114,7 @@ public class GameManager : MonoBehaviour
         timeSinceLastCollectable = 0f;
         // Reset Score
         Score = 0;
-        scoreText.text = "POINTS: " + (int)Score;
+        scoreText.text = "SCORE: " + (int)Score;
         // Start a new run
         runTimer.StartRun(); // runTimer.isRunning -> true
 
