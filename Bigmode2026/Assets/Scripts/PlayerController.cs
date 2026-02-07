@@ -13,6 +13,11 @@ public class PlayerController : MonoBehaviour
     private float xInput;
 
     private Rigidbody2D rb;
+    
+    
+    private static readonly int End = Animator.StringToHash("End");
+    private static readonly int Start = Animator.StringToHash("Start");
+    [SerializeField] Animator playerAnimator;
 
     [SerializeField] private float startYPos;
     [SerializeField, Min(0.01f)] private float moveForce;
@@ -49,6 +54,8 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(0f, startYPos, 0f);
         canControl = true;
         rb.linearVelocity = Vector2.zero;
+        playerAnimator.ResetTrigger(End);
+        playerAnimator.SetTrigger(Start);
     }
 
     void Update() {
@@ -86,6 +93,10 @@ public class PlayerController : MonoBehaviour
         if (!collision.gameObject.CompareTag("Obstacle")) return;
         
         canControl = false;
+        
+        playerAnimator.ResetTrigger(Start);
+        playerAnimator.SetTrigger(End);
+        
         SendMessageUpwards("EndRun");
     }
 }
