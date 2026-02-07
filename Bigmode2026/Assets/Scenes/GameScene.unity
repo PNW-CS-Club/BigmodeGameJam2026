@@ -3490,7 +3490,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: b85b30240d0ce254ba959114e09abcc6, type: 3}
     - target: {fileID: 456269405721574358, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
       propertyPath: m_PlayOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 456269405721574358, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
       propertyPath: OutputAudioMixerGroup

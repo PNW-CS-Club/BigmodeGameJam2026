@@ -1160,6 +1160,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 456269405721574358, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 456269405721574358, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6384067236934540011, guid: db2d7c2f42f72f34dab9fd9f30096dcb, type: 2}
+    - target: {fileID: 1219275671846296474, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
+      propertyPath: tracks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1219275671846296474, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
+      propertyPath: tracks.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b85b30240d0ce254ba959114e09abcc6, type: 3}
+    - target: {fileID: 1219275671846296474, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
+      propertyPath: tracks.Array.data[0].trackName
+      value: sigma
+      objectReference: {fileID: 0}
     - target: {fileID: 1708817684177406772, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1204,6 +1224,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8420551996285259073, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
+      propertyPath: soundEffects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8420551996285259073, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
+      propertyPath: soundEffects.Array.data[0].groupID
+      value: Coins
+      objectReference: {fileID: 0}
+    - target: {fileID: 8420551996285259073, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
+      propertyPath: soundEffects.Array.data[0].clips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8420551996285259073, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
+      propertyPath: 'soundEffects.Array.data[0].clips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4839a1b4fd79b31439bfbc9445a765bd, type: 3}
+    - target: {fileID: 8765553738290858812, guid: 302969bb7a613d641b72c371ebc1cf90, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -8835961316767862707, guid: db2d7c2f42f72f34dab9fd9f30096dcb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
