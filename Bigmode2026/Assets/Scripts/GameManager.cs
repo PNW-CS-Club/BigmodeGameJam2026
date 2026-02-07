@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     
     private RunTimer runTimer;
 
+    private GameObject gameEndCanvas;
+
     private bool doingEndAnimation;
     private float endAnimationTimer;
     [SerializeField, Min(0.01f)] private float endAnimationDuration;
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     void Awake() {
         runTimer = GetComponent<RunTimer>();    
+        gameEndCanvas = GameObject.Find("GameEndCanvas");
     }
     
     void Start() {
@@ -49,6 +52,8 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
                 doingEndAnimation = false;
                 // make end menu appear here
+                var endMenu = gameEndCanvas.GetComponent<EndMenu>();
+                endMenu.ActivateMenu();
             }
 
             return;
