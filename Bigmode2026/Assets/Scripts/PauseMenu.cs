@@ -7,55 +7,78 @@ public class PauseMenu : MonoBehaviour
     private InputSystem_Actions InputSystem_Actions;
     private InputAction Menu;
 
-    [SerializeField] private GameObject pauseUI;
-    [SerializeField] private bool isPaused;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject optionsMenuUI;
+    
+    private bool isPaused;
+    private bool isInOptions;
+    private float prevTimeScale;
 
     void Awake()
     {
         InputSystem_Actions = new InputSystem_Actions();
     }
-    void Update()
-    {
-
-    }
+    
     private void OnEnable()
     {
         Menu = InputSystem_Actions.Menu.Pause;
         Menu.Enable();
 
-        Menu.performed += Pause;
+        Menu.performed += OnEscape;
     }
     private void OnDisable()
     {
         Menu.Disable();
     }
-    void Pause(InputAction.CallbackContext context)
-    {
-        isPaused = !isPaused;
-
-        if (isPaused)
-        {
+    void OnEscape(InputAction.CallbackContext context) {
+        if (isPaused) {
+            if (isInOptions) {
+                ReturnFromOptions();
+            }
+            else {
+                DeactivateMenu();
+            }
+        }
+        else {
             ActivateMenu();
         }
-        else
-        {
-            DeactivateMenu();
-        }
     }
-    void ActivateMenu()
+    public void ActivateMenu()
     {
+        prevTimeScale = Time.timeScale;
         Time.timeScale = 0;
         AudioListener.pause = true;
-        pauseUI.SetActive(true);
+        
+        isPaused = true;
+        isInOptions = false;
+        
+        pausePanel.SetActive(true);
+        pauseMenuUI.SetActive(true);
+        optionsMenuUI.SetActive(false);
+    }
+    
+    public void OpenOptions() {
+        isInOptions = true;
+        
+        pauseMenuUI.SetActive(false);
+        optionsMenuUI.SetActive(true);
+    }
 
+    public void ReturnFromOptions() {
+        isInOptions = false;
+        
+        pauseMenuUI.SetActive(true);
+        optionsMenuUI.SetActive(false);
     }
 
     public void DeactivateMenu()
     {
-        Time.timeScale = 1;
+        Time.timeScale = prevTimeScale;
         AudioListener.pause = false;
-        pauseUI.SetActive(false);
+        
         isPaused = false;
+        pausePanel.SetActive(false);
     }
     public void MoveToMenu(int sceneID)
     {
