@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -16,7 +15,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private PlayerController player;
     
-    private RunTimer runTimer; 
+    private RunTimer runTimer;
+
+    private bool doingEndAnimation;
+    private float endAnimationTimer;
+    [SerializeField, Min(0.01f)] private float endAnimationDuration;
 
     // Obstacle variables
     private float spawnInterval; // The rate at which obstacles are spawned  (objects/second)
@@ -36,6 +39,21 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (doingEndAnimation) {
+            endAnimationTimer += Time.unscaledDeltaTime;
+            
+            if (endAnimationTimer < endAnimationDuration) {
+                Time.timeScale = 1f - (endAnimationTimer / endAnimationDuration);
+            }
+            else {
+                Time.timeScale = 0f;
+                doingEndAnimation = false;
+                // make end menu appear here
+            }
+
+            return;
+        }
+        
         if(runTimer == null) return;
         if(!runTimer.isRunning) return; // game paused or game ended
 
@@ -61,10 +79,8 @@ public class GameManager : MonoBehaviour
         scoreText.text = "POINTS: " + (int)Score;
     }
 
-    public void ResetRun() {
-        /*  // Reload the game scene (This is kind of harsh, we may want to clean the scene instead or add a delay before the new game starts)
-        _ = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);  */
-        
+    public void ResetRun() 
+    {
         foreach (Transform child in transform) {
             if (child.CompareTag("Obstacle")) {
                 Destroy(child.gameObject);
@@ -89,6 +105,8 @@ public class GameManager : MonoBehaviour
 
     private void EndRun()
     {
+        doingEndAnimation = true;
+        endAnimationTimer = 0f;
         runTimer.EndRun();
     }
 

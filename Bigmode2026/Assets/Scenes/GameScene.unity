@@ -1962,6 +1962,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e65b82ddefa4244aaca88b689ef76d8, type: 2}
   scoreText: {fileID: 787194606}
   player: {fileID: 1768974951}
+  endAnimationDuration: 1
   pointsPerSecond: 5
 --- !u!4 &1768974948 stripped
 Transform:
@@ -2194,6 +2195,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1489883212}
     m_Modifications:
+    - target: {fileID: 2863973063439482904, guid: 3d4bf6e086bd82b45ab5b67b431e08da, type: 3}
+      propertyPath: m_Mass
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4153928190441869324, guid: 3d4bf6e086bd82b45ab5b67b431e08da, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
