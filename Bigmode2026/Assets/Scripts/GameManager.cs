@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         timeSinceLastCollectable += Time.deltaTime;
 
         // Generate obstacles
-        spawnInterval = Mathf.Max(0.4f, 2.0f - runTimer.runTime * 0.01f); // obstacles per second
+        spawnInterval = Mathf.Max(0.3f, 1.5f - runTimer.runTime * 0.02f); // obstacles per second
         
         if(timeSinceLastObstacle >= spawnInterval){
             // Generate an obstacle
