@@ -15,6 +15,8 @@ public class PauseMenu : MonoBehaviour
     private bool isInOptions;
     private float prevTimeScale;
 
+    public bool CanPause = true;
+
     void Awake()
     {
         InputSystem_Actions = new InputSystem_Actions();
@@ -32,6 +34,8 @@ public class PauseMenu : MonoBehaviour
         Menu.Disable();
     }
     void OnEscape(InputAction.CallbackContext context) {
+        if (!CanPause) return;
+        
         if (isPaused) {
             if (isInOptions) {
                 ReturnFromOptions();
@@ -44,8 +48,9 @@ public class PauseMenu : MonoBehaviour
             ActivateMenu();
         }
     }
-    public void ActivateMenu()
-    {
+    public void ActivateMenu() {
+        if (!CanPause) return;
+        
         prevTimeScale = Time.timeScale;
         Time.timeScale = 0;
         AudioListener.pause = true;
