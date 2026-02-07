@@ -8,7 +8,6 @@ public class Collectable : MonoBehaviour
         if (!collision.CompareTag("Player")) return;
         
         gameManager.AddPoints(10);
-        Debug.Log("You collected the coin");
         Destroy(gameObject);
     }
 }
