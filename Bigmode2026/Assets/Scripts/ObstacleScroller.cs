@@ -13,7 +13,7 @@ public class ObstacleScroller : MonoBehaviour
         
         foreach (Transform child in transform) 
         {
-            if (!child.gameObject.activeInHierarchy || !child.CompareTag("Obstacle")) continue;
+            if (!child.gameObject.activeInHierarchy || (!child.CompareTag("Obstacle") && !child.CompareTag("Collectable")) ) continue;
             
             child.Translate(Vector2.down * distanceDelta, Space.World);
 

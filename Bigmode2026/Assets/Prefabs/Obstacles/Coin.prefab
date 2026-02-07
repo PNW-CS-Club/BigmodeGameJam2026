@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3178294320212679187}
   - component: {fileID: 6597886466361066993}
-  - component: {fileID: 504977068245206040}
+  - component: {fileID: 8651582073033686870}
   - component: {fileID: -6758007603456032010}
   - component: {fileID: -4498657459682047581}
   m_Layer: 0
   m_Name: Coin
-  m_TagString: Obstacle
+  m_TagString: Collectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.19, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -82,8 +82,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: f4c47068cb3273c4b86fc0db985155bb, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -93,8 +93,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &504977068245206040
-BoxCollider2D:
+--- !u!60 &8651582073033686870
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -137,8 +137,17 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.5, y: -0.25}
+      - {x: 0.5, y: 0.25}
+      - {x: 0.25, y: 0.5}
+      - {x: -0.25, y: 0.5}
+      - {x: -0.5, y: 0.25}
+      - {x: -0.5, y: -0.25}
+      - {x: -0.25, y: -0.5}
+      - {x: 0.25, y: -0.5}
+  m_UseDelaunayMesh: 0
 --- !u!114 &-6758007603456032010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c2444f453d6f64198be16a07b08ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Collectable
-  scoreManager: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!114 &-4498657459682047581
 MonoBehaviour:
   m_ObjectHideFlags: 0

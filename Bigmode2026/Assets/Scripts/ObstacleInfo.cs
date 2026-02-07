@@ -4,14 +4,12 @@ using UnityEngine;
 public class ObstacleInfo : ScriptableObject
 {
     public GameObject prefab;
-    public ObstacleType type;
-    public ObstacleDifficulty difficulty;
     public float unitLength;
 }
 
 public enum ObstacleType
 {
-    Basketball, SmallSquare, SmallTriangle, LockerVert, LockerHoriz, Coin
+    Basketball, LockerVert, LockerHoriz, Coin, Desk, WetFloorSign
 }
 
 public enum ObstacleDifficulty

@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 374ac933240c472fbf09d1b336934752, type: 3}
-  m_Name: Triangle Info
+  m_Name: WetFloorGroup Info
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleInfo
-  prefab: {fileID: 3180369182102424114, guid: 0a5c63541f8dbf34f8ac139d28b88fbd, type: 3}
-  type: 2
-  difficulty: 0
-  unitLength: 1
+  prefab: {fileID: 7842969657784479550, guid: 0278d73be97a81f428db3f7e14e01200, type: 3}
+  unitLength: 4

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
         timeSinceLastCollectable += Time.deltaTime;
 
         // Generate obstacles
-        spawnInterval = Mathf.Max(0.4f, 2.0f - runTimer.runTime * 0.01f); // obstacles per second
+        spawnInterval = Mathf.Max(0.3f, 1.5f - runTimer.runTime * 0.02f); // obstacles per second
         
         if(timeSinceLastObstacle >= spawnInterval){
             // Generate an obstacle
@@ -65,15 +66,25 @@ public class GameManager : MonoBehaviour
             AddPoints(5);
             timeSinceLastCollectable = 0f; // reset timer
         }
+
+        
     }
 
     private void StartRun(){
-        // Set up Obstacle Spawn Timer
+        // Reset timers
         timeSinceLastObstacle = 0f;
         timeSinceLastCollectable = 0f;
+        // Reset Score
         Score = 0;
+        scoreText.text = "POINTS: " + Score; // reset score display
+        // Start a new run
         runTimer.StartRun(); // runTimer.isRunning -> true
 
+    }
+
+    private void EndRun()
+    {
+        Debug.Log("You hit an obstacle!");
     }
 
     public ObstacleDifficulty PickObstacleDifficulty(float t)
@@ -155,5 +166,11 @@ public class GameManager : MonoBehaviour
         // Round the y position to the nearest unit in relation to the floor
 
         collectable.transform.position = new Vector3(xPos, 10f, 0);
+    }
+
+    private void NewRun()
+    {
+        // Reload the game scene (This is kind of harsh, we may want to clean the scene instead or add a delay before the new game starts)
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex); 
     }
 }
