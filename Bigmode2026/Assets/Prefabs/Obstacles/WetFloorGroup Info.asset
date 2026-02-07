@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WetFloorGroup Info
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleInfo
   prefab: {fileID: 7842969657784479550, guid: 0278d73be97a81f428db3f7e14e01200, type: 3}
-  unitLength: 1
+  unitLength: 4
