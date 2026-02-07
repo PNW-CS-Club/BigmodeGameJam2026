@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Basketball Info
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleInfo
   prefab: {fileID: 161449058802785146, guid: 52ef88cbf3c9abf418307331be308b4b, type: 3}
-  type: 0
-  difficulty: 0
   unitLength: 1
+  isProjectile: 1
