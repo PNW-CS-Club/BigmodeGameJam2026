@@ -5,11 +5,7 @@ public class ObstacleInfo : ScriptableObject
 {
     public GameObject prefab;
     public float unitLength;
-}
-
-public enum ObstacleType
-{
-    Basketball, LockerVert, LockerHoriz, Coin, Desk, WetFloorSign
+    public bool isProjectile;
 }
 
 public enum ObstacleDifficulty

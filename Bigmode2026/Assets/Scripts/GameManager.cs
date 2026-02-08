@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -14,37 +13,117 @@ public class GameManager : MonoBehaviour
     [SerializeField]  private ObstacleInfo[] collectables;
     
     [SerializeField] private TMP_Text scoreText;
-    
-    private RunTimer runTimer; 
+    [SerializeField] private TMP_Text highScoreText;
+    [SerializeField] private PlayerController player;
+
+    [SerializeField] private FloorScroll floorScroller;
+    private float initFloorScrollSpeed;
+    private ObstacleScroller obstacleScroller;
+    private float initObstacleScrollSpeed;
+
+    private RunTimer runTimer;
+
+    // Pause menu variables
+    private GameObject pauseCanvas;
+    private PauseMenu pauseMenu;
+
+    // End menu variables
+    private GameObject gameEndCanvas;
+    private EndMenu endMenu;
+
+    private bool doingEndAnimation;
+    private float endAnimationTimer;
+    [SerializeField, Min(0.01f)] private float endAnimationDuration;
 
     // Obstacle variables
-    private Vector3 pos; // Position of the obstacle
-    private Quaternion rot; // Rotation of the obstacle
-    private float angleDegrees; // Angle of the obstacle in degrees
-
     private float spawnInterval; // The rate at which obstacles are spawned  (objects/second)
     private float timeSinceLastObstacle; // The Time.deltaTime since the last obstacle was spawned
     private float timeSinceLastCollectable; // The Time.deltaTime since the last collectable was spawned
 
-    public int Score { get; private set; } = 0; 
-    
-    void Start() {
-        scoreText.text = "POINTS: " + Score;
-        
-        // Set up Run Timer
-        runTimer = GetComponent<RunTimer>();
-        
-        StartRun();
+    [SerializeField] private float pointsPerSecond = 5f;
+    public float Score { get; private set; } = 0f;
+
+    private Vector3 scoreTextStartPos;
+    private Vector3 highScoreTextStartPos;
+    private float scoreFontSize;
+
+    void Awake() {
+        runTimer = GetComponent<RunTimer>();    
+        obstacleScroller = GetComponent<ObstacleScroller>();
+        initFloorScrollSpeed = obstacleScroller.scrollSpeed;
+        initObstacleScrollSpeed = obstacleScroller.scrollSpeed;
+
+        pauseCanvas = GameObject.Find("PauseCanvas");
+        pauseMenu = pauseCanvas.GetComponent<PauseMenu>();
+        gameEndCanvas = GameObject.Find("GameEndCanvas");
+        endMenu = gameEndCanvas.GetComponent<EndMenu>();
     }
     
-    public void AddPoints(int points)
-    {
-        Score += points;
-        scoreText.text = "POINTS: " + Score;
+    void Start() {
+        InitTextSettings();
+        StartRun();
+    }
+
+    private void InitTextSettings() {
+        scoreTextStartPos = scoreText.transform.localPosition;
+        highScoreTextStartPos = highScoreText.transform.localPosition;
+        scoreFontSize = scoreText.fontSize;
+    }
+
+    private void StartTextSettings(){
+        // set alignment
+        scoreText.alignment = TextAlignmentOptions.Right;
+        highScoreText.alignment = TextAlignmentOptions.Right;
+        // set position
+        scoreText.transform.localPosition = scoreTextStartPos;
+        highScoreText.transform.localPosition = highScoreTextStartPos;
+        // set color
+        Color purple = new Color(44f / 255f, 27f / 255f, 46f / 255f);
+        scoreText.color = purple;
+        highScoreText.color = purple;
+        // set font size
+        scoreText.fontSize = scoreFontSize;
+        highScoreText.fontSize = scoreFontSize;
+    }
+    
+    private void EndTextSettings(){
+        // set alignment
+        scoreText.alignment = TextAlignmentOptions.Center;
+        highScoreText.alignment = TextAlignmentOptions.Center;
+        // set position
+        scoreText.transform.localPosition = new Vector2(0,120);// 165
+        highScoreText.transform.localPosition = new Vector2(0, 20);
+        // set color
+        Color beige = new Color(255f / 255f, 244f / 255f, 224f / 255f);
+        scoreText.color = beige;
+        highScoreText.color = beige;
+        // set font size
+        scoreText.fontSize = 64f;
+        highScoreText.fontSize = 64f;
     }
 
     void Update()
     {
+        if (doingEndAnimation) {
+            endAnimationTimer += Time.unscaledDeltaTime;
+            
+            if (endAnimationTimer < endAnimationDuration) {
+                Time.timeScale = 1f - (endAnimationTimer / endAnimationDuration);
+            }
+            else {
+                Time.timeScale = 0f;
+                doingEndAnimation = false;
+    
+                // make end menu appear
+                endMenu.ActivateMenu();
+                // Update the score text
+                EndTextSettings();
+                
+            }
+
+            return;
+        }
+        
         if(runTimer == null) return;
         if(!runTimer.isRunning) return; // game paused or game ended
 
@@ -53,41 +132,68 @@ public class GameManager : MonoBehaviour
 
         // Generate obstacles
         spawnInterval = Mathf.Max(0.3f, 1.5f - runTimer.runTime * 0.02f); // obstacles per second
-        
+        obstacleScroller.scrollSpeed = Mathf.Min(initObstacleScrollSpeed * 1.5f, initObstacleScrollSpeed + runTimer.runTime * 0.005f); // scale the scroll speed of obstacles
+        floorScroller.scrollSpeed = Mathf.Min(initFloorScrollSpeed * 1.5f, initFloorScrollSpeed + runTimer.runTime * 0.005f); // scale the scroll speed of the floor
         if(timeSinceLastObstacle >= spawnInterval){
             // Generate an obstacle
-            GenerateObstacles();
+            GenerateObstacle();
             timeSinceLastObstacle = 0f; // reset timer
         }
         // Generate an obstacle every second
         if(timeSinceLastCollectable >= 1f){
             GenerateCollectables();
-            // Add points every second
-            AddPoints(5);
             timeSinceLastCollectable = 0f; // reset timer
         }
-
         
+        // Add points and update score text constantly
+        Score += Time.deltaTime * pointsPerSecond;
+        scoreText.text = "SCORE: " + (int)Score;
+        // Update high score text too if score is greater than high score
+        if(Score > HighScore.Instance.GetScore()){
+            highScoreText.text = "BEST: " + (int)Score;
+        }
     }
 
-    private void StartRun(){
+    public void ResetRun() 
+    {
+        foreach (Transform child in transform) {
+            if (child.CompareTag("Obstacle") || child.CompareTag("Collectable")) {
+                Destroy(child.gameObject);
+            }
+        }
+        StartTextSettings();
+        StartRun();
+    }
+
+    private void StartRun() {
         // Reset timers
         timeSinceLastObstacle = 0f;
         timeSinceLastCollectable = 0f;
         // Reset Score
         Score = 0;
-        scoreText.text = "POINTS: " + Score; // reset score display
+        scoreText.text = "SCORE: " + (int)Score;
+        highScoreText.text = "BEST: " + (int)HighScore.Instance.GetScore();
+        // Allow Player to pause
+        pauseMenu.CanPause = true;
         // Start a new run
         runTimer.StartRun(); // runTimer.isRunning -> true
 
+        player.ResetPlayer();
+        Time.timeScale = 1f;
     }
 
     private void EndRun()
     {
-        Debug.Log("You hit an obstacle!");
+        doingEndAnimation = true;
+        endAnimationTimer = 0f;
+        pauseMenu.CanPause = false; // Player cannot pause when game ends
+        runTimer.EndRun();
+        if( Score >= HighScore.Instance.GetScore()){
+            HighScore.Instance.SetScore(Score);
+        }
     }
 
-    public ObstacleDifficulty PickObstacleDifficulty(float t)
+    private ObstacleDifficulty PickObstacleDifficulty(float t)
     {
         if (t < 5f) return ObstacleDifficulty.Easy;
         
@@ -99,7 +205,9 @@ public class GameManager : MonoBehaviour
         return ObstacleDifficulty.Easy;
     }
 
-    private void GenerateObstacles()
+    public void AddPoints(float points) => Score += points;
+
+    private void GenerateObstacle()
     {
         // Choose an obstacle pool to spawn from
         var difficulty = PickObstacleDifficulty(runTimer.runTime);
@@ -127,29 +235,24 @@ public class GameManager : MonoBehaviour
         // Give the obstacle a random start position from the top
         float obstacleLength = info.unitLength;
         // Round the x position to the nearest unit / Spawn object at y = 10 / z = 0
-        float xPos = Mathf.Round(Random.Range(-11.0f+obstacleLength/2f, 11.0f-obstacleLength/2f));
+        float xPos = Mathf.Round(Random.Range(-11.0f + obstacleLength/2f, 11.0f - obstacleLength/2f));
         // Round the y position to the nearest unit in relation to the floor
 
         obstacle.transform.position = new Vector3(xPos, 10f, 0);
 
-
-        // Give the obstacle a random initial velocity
-        Rigidbody2D rb = obstacle.GetComponent<Rigidbody2D>();
-        int direction = Random.Range(0,3);
-        float obstacleSpeed = Random.Range(3f,7f);
-        if(rb != null){
-            if(direction == 0){
-                // Set the velocity left and down
-                rb.linearVelocity += Vector2.left * obstacleSpeed;
-                rb.linearVelocity += Vector2.down * obstacleSpeed;
-            } else if (direction == 1){
-                // Set the velocity right and down
-                rb.linearVelocity += Vector2.right * obstacleSpeed;
-                rb.linearVelocity += Vector2.down * obstacleSpeed;
-            } else{
-                // Set the velocity straight down
-                rb.linearVelocity += Vector2.down * obstacleSpeed;
-            } 
+        if (info.isProjectile) {
+            Rigidbody2D rb = obstacle.GetComponent<Rigidbody2D>();
+            if (rb == null) {
+                Debug.LogWarning($"Failed to throw obstacle {info.prefab.name} without rigidbody");
+                return;
+            }
+            
+            // Give the obstacle a random initial velocity
+            float obstacleSpeed = Random.Range(3f,7f);
+            float angle = Random.Range(-60f, 60f) * Mathf.Deg2Rad; 
+            Vector2 direction = Mathf.Sin(angle) * Vector2.right + Mathf.Cos(angle) * Vector2.down; 
+            
+            rb.AddForce(direction * obstacleSpeed, ForceMode2D.Impulse);
         }
     }
 
@@ -166,11 +269,5 @@ public class GameManager : MonoBehaviour
         // Round the y position to the nearest unit in relation to the floor
 
         collectable.transform.position = new Vector3(xPos, 10f, 0);
-    }
-
-    private void NewRun()
-    {
-        // Reload the game scene (This is kind of harsh, we may want to clean the scene instead or add a delay before the new game starts)
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex); 
     }
 }

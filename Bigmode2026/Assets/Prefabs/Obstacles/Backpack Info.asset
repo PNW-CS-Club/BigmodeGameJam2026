@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 374ac933240c472fbf09d1b336934752, type: 3}
-  m_Name: Basketball Info
+  m_Name: Backpack Info
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleInfo
-  prefab: {fileID: 161449058802785146, guid: 52ef88cbf3c9abf418307331be308b4b, type: 3}
+  prefab: {fileID: 334383477585809724, guid: 922a8dc7219071d43825c2eb37e49522, type: 3}
   unitLength: 1
   isProjectile: 1
