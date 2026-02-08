@@ -146,6 +146,7 @@ public class GameManager : MonoBehaviour
         // Reset Score
         Score = 0;
         scoreText.text = "SCORE: " + (int)Score;
+        highScoreText.text = "BEST: " + (int)HighScore.Instance.GetScore();
         // Start a new run
         runTimer.StartRun(); // runTimer.isRunning -> true
 
@@ -160,7 +161,6 @@ public class GameManager : MonoBehaviour
         runTimer.EndRun();
         if( Score >= HighScore.Instance.GetScore()){
             HighScore.Instance.SetScore(Score);
-            Debug.Log("New High Score: " + HighScore.Instance.GetScore());
         }
     }
 
