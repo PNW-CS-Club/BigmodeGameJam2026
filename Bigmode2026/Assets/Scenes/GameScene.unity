@@ -3184,10 +3184,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2339999754292802942, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
+      propertyPath: tracks.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: eff648128631f1641b33ff66b961cd04, type: 3}
+    - target: {fileID: 2339999754292802942, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
+      propertyPath: tracks.Array.data[0].trackName
+      value: skooled
+      objectReference: {fileID: 0}
     - target: {fileID: 3293068142104249615, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
       propertyPath: m_Resource
       value: 
-      objectReference: {fileID: 8300000, guid: 665cf3b8debeda549a921a2cf70f12ab, type: 3}
+      objectReference: {fileID: 8300000, guid: eff648128631f1641b33ff66b961cd04, type: 3}
     - target: {fileID: 6553794746044202974, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
       propertyPath: soundEffects.Array.size
       value: 3

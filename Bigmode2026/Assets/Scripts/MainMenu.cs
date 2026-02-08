@@ -19,7 +19,7 @@ public class MainMenu : MonoBehaviour
     public void Play() 
     {
         StartCoroutine(PlayAfterDelayCoroutine());
-        MusicManager.Instance.PlayMusic("sigma");
+        MusicManager.Instance.PlayMusic("skooled");
 
     }
 
