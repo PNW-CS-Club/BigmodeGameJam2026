@@ -15,8 +15,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text highScoreText;
     [SerializeField] private PlayerController player;
-    
+
+    [SerializeField] private FloorScroll floorScroller;
+    private float initFloorScrollSpeed;
+    private ObstacleScroller obstacleScroller;
+    private float initObstacleScrollSpeed;
+
     private RunTimer runTimer;
+
+    // Pause menu variables
+    private GameObject pauseCanvas;
+    private PauseMenu pauseMenu;
 
     // End menu variables
     private GameObject gameEndCanvas;
@@ -33,16 +42,32 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float pointsPerSecond = 5f;
     public float Score { get; private set; } = 0f;
-    //ublic float HScore {get; private set; } = 0f;
+
+    private Vector3 scoreTextStartPos;
+    private Vector3 highScoreTextStartPos;
+    private float scoreFontSize;
 
     void Awake() {
         runTimer = GetComponent<RunTimer>();    
+        obstacleScroller = GetComponent<ObstacleScroller>();
+        initFloorScrollSpeed = obstacleScroller.scrollSpeed;
+        initObstacleScrollSpeed = obstacleScroller.scrollSpeed;
+
+        pauseCanvas = GameObject.Find("PauseCanvas");
+        pauseMenu = pauseCanvas.GetComponent<PauseMenu>();
         gameEndCanvas = GameObject.Find("GameEndCanvas");
         endMenu = gameEndCanvas.GetComponent<EndMenu>();
     }
     
     void Start() {
+        InitTextSettings();
         StartRun();
+    }
+
+    private void InitTextSettings() {
+        scoreTextStartPos = scoreText.transform.localPosition;
+        highScoreTextStartPos = highScoreText.transform.localPosition;
+        scoreFontSize = scoreText.fontSize;
     }
 
     private void StartTextSettings(){
@@ -50,15 +75,15 @@ public class GameManager : MonoBehaviour
         scoreText.alignment = TextAlignmentOptions.Right;
         highScoreText.alignment = TextAlignmentOptions.Right;
         // set position
-        scoreText.transform.localPosition = new Vector2(415,420); // 690, 470
-        highScoreText.transform.localPosition = new Vector2(415, 470);// 690, 520
+        scoreText.transform.localPosition = scoreTextStartPos;
+        highScoreText.transform.localPosition = highScoreTextStartPos;
         // set color
         Color purple = new Color(44f / 255f, 27f / 255f, 46f / 255f);
         scoreText.color = purple;
         highScoreText.color = purple;
         // set font size
-        scoreText.fontSize = 48;
-        highScoreText.fontSize = 48;
+        scoreText.fontSize = scoreFontSize;
+        highScoreText.fontSize = scoreFontSize;
     }
     
     private void EndTextSettings(){
@@ -66,8 +91,8 @@ public class GameManager : MonoBehaviour
         scoreText.alignment = TextAlignmentOptions.Center;
         highScoreText.alignment = TextAlignmentOptions.Center;
         // set position
-        scoreText.transform.localPosition = new Vector2(0,20);// 165
-        highScoreText.transform.localPosition = new Vector2(0, 120);
+        scoreText.transform.localPosition = new Vector2(0,120);// 165
+        highScoreText.transform.localPosition = new Vector2(0, 20);
         // set color
         Color beige = new Color(255f / 255f, 244f / 255f, 224f / 255f);
         scoreText.color = beige;
@@ -107,7 +132,8 @@ public class GameManager : MonoBehaviour
 
         // Generate obstacles
         spawnInterval = Mathf.Max(0.3f, 1.5f - runTimer.runTime * 0.02f); // obstacles per second
-        
+        obstacleScroller.scrollSpeed = Mathf.Min(initObstacleScrollSpeed * 1.5f, initObstacleScrollSpeed + runTimer.runTime * 0.005f); // scale the scroll speed of obstacles
+        floorScroller.scrollSpeed = Mathf.Min(initFloorScrollSpeed * 1.5f, initFloorScrollSpeed + runTimer.runTime * 0.005f); // scale the scroll speed of the floor
         if(timeSinceLastObstacle >= spawnInterval){
             // Generate an obstacle
             GenerateObstacle();
@@ -147,6 +173,8 @@ public class GameManager : MonoBehaviour
         Score = 0;
         scoreText.text = "SCORE: " + (int)Score;
         highScoreText.text = "BEST: " + (int)HighScore.Instance.GetScore();
+        // Allow Player to pause
+        pauseMenu.CanPause = true;
         // Start a new run
         runTimer.StartRun(); // runTimer.isRunning -> true
 
@@ -158,6 +186,7 @@ public class GameManager : MonoBehaviour
     {
         doingEndAnimation = true;
         endAnimationTimer = 0f;
+        pauseMenu.CanPause = false; // Player cannot pause when game ends
         runTimer.EndRun();
         if( Score >= HighScore.Instance.GetScore()){
             HighScore.Instance.SetScore(Score);
