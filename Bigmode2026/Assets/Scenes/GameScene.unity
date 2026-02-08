@@ -2448,14 +2448,6 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetMasterVolume
       objectReference: {fileID: 0}
-    - target: {fileID: 8616786276756900977, guid: 8066fe5e7656d8444abb5890b013a8f9, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 241c6acceca8b844baad6cbcf60cefc7, type: 2}
-    - target: {fileID: 8616786276756900977, guid: 8066fe5e7656d8444abb5890b013a8f9, type: 3}
-      propertyPath: m_fontStyle
-      value: 16
-      objectReference: {fileID: 0}
     - target: {fileID: 8568536362351973890, guid: 8066fe5e7656d8444abb5890b013a8f9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2463,6 +2455,14 @@ PrefabInstance:
     - target: {fileID: 8568536362351973890, guid: 8066fe5e7656d8444abb5890b013a8f9, type: 3}
       propertyPath: m_AnchorMin.x
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616786276756900977, guid: 8066fe5e7656d8444abb5890b013a8f9, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 241c6acceca8b844baad6cbcf60cefc7, type: 2}
+    - target: {fileID: 8616786276756900977, guid: 8066fe5e7656d8444abb5890b013a8f9, type: 3}
+      propertyPath: m_fontStyle
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 9035999965706849258, guid: 8066fe5e7656d8444abb5890b013a8f9, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3112,6 +3112,38 @@ PrefabInstance:
       propertyPath: m_Resource
       value: 
       objectReference: {fileID: 8300000, guid: 665cf3b8debeda549a921a2cf70f12ab, type: 3}
+    - target: {fileID: 6553794746044202974, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
+      propertyPath: soundEffects.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6553794746044202974, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
+      propertyPath: soundEffects.Array.data[1].groupID
+      value: Hurt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6553794746044202974, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
+      propertyPath: soundEffects.Array.data[2].groupID
+      value: Lose
+      objectReference: {fileID: 0}
+    - target: {fileID: 6553794746044202974, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
+      propertyPath: soundEffects.Array.data[1].clips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6553794746044202974, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
+      propertyPath: soundEffects.Array.data[2].clips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6553794746044202974, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
+      propertyPath: 'soundEffects.Array.data[1].clips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4e47632989e38e74285d61100338de96, type: 3}
+    - target: {fileID: 6553794746044202974, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
+      propertyPath: 'soundEffects.Array.data[1].clips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4839a1b4fd79b31439bfbc9445a765bd, type: 3}
+    - target: {fileID: 6553794746044202974, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
+      propertyPath: 'soundEffects.Array.data[2].clips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: fc592fc69d361b744b12cbfc50988b9d, type: 3}
     - target: {fileID: 6939246598007565716, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
       propertyPath: m_Name
       value: AudioManager 1 2
