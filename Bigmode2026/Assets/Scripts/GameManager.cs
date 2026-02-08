@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
 
     private RunTimer runTimer;
 
+    // Pause menu variables
+    private GameObject pauseCanvas;
+    private PauseMenu pauseMenu;
+
     // End menu variables
     private GameObject gameEndCanvas;
     private EndMenu endMenu;
@@ -48,6 +52,9 @@ public class GameManager : MonoBehaviour
         obstacleScroller = GetComponent<ObstacleScroller>();
         initFloorScrollSpeed = obstacleScroller.scrollSpeed;
         initObstacleScrollSpeed = obstacleScroller.scrollSpeed;
+
+        pauseCanvas = GameObject.Find("PauseCanvas");
+        pauseMenu = pauseCanvas.GetComponent<PauseMenu>();
         gameEndCanvas = GameObject.Find("GameEndCanvas");
         endMenu = gameEndCanvas.GetComponent<EndMenu>();
     }
@@ -166,6 +173,8 @@ public class GameManager : MonoBehaviour
         Score = 0;
         scoreText.text = "SCORE: " + (int)Score;
         highScoreText.text = "BEST: " + (int)HighScore.Instance.GetScore();
+        // Allow Player to pause
+        pauseMenu.CanPause = true;
         // Start a new run
         runTimer.StartRun(); // runTimer.isRunning -> true
 
@@ -177,6 +186,7 @@ public class GameManager : MonoBehaviour
     {
         doingEndAnimation = true;
         endAnimationTimer = 0f;
+        pauseMenu.CanPause = false; // Player cannot pause when game ends
         runTimer.EndRun();
         if( Score >= HighScore.Instance.GetScore()){
             HighScore.Instance.SetScore(Score);
