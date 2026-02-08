@@ -50,8 +50,8 @@ public class GameManager : MonoBehaviour
         scoreText.alignment = TextAlignmentOptions.Right;
         highScoreText.alignment = TextAlignmentOptions.Right;
         // set position
-        scoreText.transform.localPosition = new Vector2(690,470);
-        highScoreText.transform.localPosition = new Vector2(690, 520);
+        scoreText.transform.localPosition = new Vector2(415,420); // 690, 470
+        highScoreText.transform.localPosition = new Vector2(415, 470);// 690, 520
         // set color
         Color purple = new Color(44f / 255f, 27f / 255f, 46f / 255f);
         scoreText.color = purple;
@@ -66,8 +66,8 @@ public class GameManager : MonoBehaviour
         scoreText.alignment = TextAlignmentOptions.Center;
         highScoreText.alignment = TextAlignmentOptions.Center;
         // set position
-        scoreText.transform.localPosition = new Vector2(165,50);
-        highScoreText.transform.localPosition = new Vector2(165, 145);
+        scoreText.transform.localPosition = new Vector2(0,20);// 165
+        highScoreText.transform.localPosition = new Vector2(0, 120);
         // set color
         Color beige = new Color(255f / 255f, 244f / 255f, 224f / 255f);
         scoreText.color = beige;
