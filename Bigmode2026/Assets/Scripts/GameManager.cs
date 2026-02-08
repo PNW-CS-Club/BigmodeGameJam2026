@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
         timeSinceLastCollectable += Time.deltaTime;
 
         // Generate obstacles
-        spawnInterval = Mathf.Max(0.3f, 1.5f - runTimer.runTime * 0.02f); // obstacles per second
+        spawnInterval = Mathf.Max(0.3f, 1.5f - runTimer.runTime * 0.1f); // obstacles per second
         obstacleScroller.scrollSpeed = Mathf.Min(initObstacleScrollSpeed * 1.5f, initObstacleScrollSpeed + runTimer.runTime * 0.005f); // scale the scroll speed of obstacles
         floorScroller.scrollSpeed = Mathf.Min(initFloorScrollSpeed * 1.5f, initFloorScrollSpeed + runTimer.runTime * 0.005f); // scale the scroll speed of the floor
         if(timeSinceLastObstacle >= spawnInterval){
