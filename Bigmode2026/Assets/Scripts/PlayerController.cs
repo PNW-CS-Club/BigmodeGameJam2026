@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision) {
         if (!collision.gameObject.CompareTag("Obstacle")) return;
-        
+        SoundManager.Instance.PlaySound3D("Hurt", transform.position);
         canControl = false;
         
         playerAnimator.ResetTrigger(Start);
