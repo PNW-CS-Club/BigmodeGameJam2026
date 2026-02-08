@@ -2529,6 +2529,7 @@ MonoBehaviour:
   scoreText: {fileID: 787194606}
   highScoreText: {fileID: 1819769373}
   player: {fileID: 1768974951}
+  floorScroller: {fileID: 541909634}
   endAnimationDuration: 1
   pointsPerSecond: 5
 --- !u!1001 &1622652159

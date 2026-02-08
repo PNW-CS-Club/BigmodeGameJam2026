@@ -15,7 +15,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text highScoreText;
     [SerializeField] private PlayerController player;
-    
+
+    [SerializeField] private FloorScroll floorScroller;
+    private float initFloorScrollSpeed;
+    private ObstacleScroller obstacleScroller;
+    private float initObstacleScrollSpeed;
+
     private RunTimer runTimer;
 
     // End menu variables
@@ -37,6 +42,9 @@ public class GameManager : MonoBehaviour
 
     void Awake() {
         runTimer = GetComponent<RunTimer>();    
+        obstacleScroller = GetComponent<ObstacleScroller>();
+        initFloorScrollSpeed = obstacleScroller.scrollSpeed;
+        initObstacleScrollSpeed = obstacleScroller.scrollSpeed;
         gameEndCanvas = GameObject.Find("GameEndCanvas");
         endMenu = gameEndCanvas.GetComponent<EndMenu>();
     }
@@ -107,7 +115,8 @@ public class GameManager : MonoBehaviour
 
         // Generate obstacles
         spawnInterval = Mathf.Max(0.3f, 1.5f - runTimer.runTime * 0.02f); // obstacles per second
-        
+        obstacleScroller.scrollSpeed = Mathf.Min(initObstacleScrollSpeed * 1.5f, initObstacleScrollSpeed + runTimer.runTime * 0.005f); // scale the scroll speed of obstacles
+        floorScroller.scrollSpeed = Mathf.Min(initFloorScrollSpeed * 1.5f, initFloorScrollSpeed + runTimer.runTime * 0.005f); // scale the scroll speed of the floor
         if(timeSinceLastObstacle >= spawnInterval){
             // Generate an obstacle
             GenerateObstacle();
