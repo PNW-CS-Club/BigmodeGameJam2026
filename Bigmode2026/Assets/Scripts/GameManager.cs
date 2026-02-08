@@ -45,6 +45,38 @@ public class GameManager : MonoBehaviour
         StartRun();
     }
 
+    private void StartTextSettings(){
+        // set alignment
+        scoreText.alignment = TextAlignmentOptions.Right;
+        highScoreText.alignment = TextAlignmentOptions.Right;
+        // set position
+        scoreText.transform.localPosition = new Vector2(415,420); // 690, 470
+        highScoreText.transform.localPosition = new Vector2(415, 470);// 690, 520
+        // set color
+        Color purple = new Color(44f / 255f, 27f / 255f, 46f / 255f);
+        scoreText.color = purple;
+        highScoreText.color = purple;
+        // set font size
+        scoreText.fontSize = 48;
+        highScoreText.fontSize = 48;
+    }
+    
+    private void EndTextSettings(){
+        // set alignment
+        scoreText.alignment = TextAlignmentOptions.Center;
+        highScoreText.alignment = TextAlignmentOptions.Center;
+        // set position
+        scoreText.transform.localPosition = new Vector2(0,20);// 165
+        highScoreText.transform.localPosition = new Vector2(0, 120);
+        // set color
+        Color beige = new Color(255f / 255f, 244f / 255f, 224f / 255f);
+        scoreText.color = beige;
+        highScoreText.color = beige;
+        // set font size
+        scoreText.fontSize = 64f;
+        highScoreText.fontSize = 64f;
+    }
+
     void Update()
     {
         if (doingEndAnimation) {
@@ -59,9 +91,8 @@ public class GameManager : MonoBehaviour
     
                 // make end menu appear
                 endMenu.ActivateMenu();
-
-                // move the high score text and current score text
-
+                // Update the score text
+                EndTextSettings();
                 
             }
 
@@ -104,7 +135,7 @@ public class GameManager : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
-        
+        StartTextSettings();
         StartRun();
     }
 
@@ -115,6 +146,7 @@ public class GameManager : MonoBehaviour
         // Reset Score
         Score = 0;
         scoreText.text = "SCORE: " + (int)Score;
+        highScoreText.text = "BEST: " + (int)HighScore.Instance.GetScore();
         // Start a new run
         runTimer.StartRun(); // runTimer.isRunning -> true
 
@@ -129,7 +161,6 @@ public class GameManager : MonoBehaviour
         runTimer.EndRun();
         if( Score >= HighScore.Instance.GetScore()){
             HighScore.Instance.SetScore(Score);
-            Debug.Log("New High Score: " + HighScore.Instance.GetScore());
         }
     }
 
