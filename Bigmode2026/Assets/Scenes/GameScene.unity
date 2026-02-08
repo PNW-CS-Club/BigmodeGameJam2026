@@ -3187,7 +3187,7 @@ PrefabInstance:
     - target: {fileID: 2339999754292802942, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
       propertyPath: tracks.Array.data[0].clip
       value: 
-      objectReference: {fileID: 8300000, guid: eff648128631f1641b33ff66b961cd04, type: 3}
+      objectReference: {fileID: 8300000, guid: f2c8d571bb1c21342aa533a518e96a6e, type: 3}
     - target: {fileID: 2339999754292802942, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
       propertyPath: tracks.Array.data[0].trackName
       value: skooled
@@ -3195,7 +3195,7 @@ PrefabInstance:
     - target: {fileID: 3293068142104249615, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
       propertyPath: m_Resource
       value: 
-      objectReference: {fileID: 8300000, guid: eff648128631f1641b33ff66b961cd04, type: 3}
+      objectReference: {fileID: 8300000, guid: f2c8d571bb1c21342aa533a518e96a6e, type: 3}
     - target: {fileID: 6553794746044202974, guid: 76a794d0ccf35aa489e417013baa796e, type: 3}
       propertyPath: soundEffects.Array.size
       value: 3
