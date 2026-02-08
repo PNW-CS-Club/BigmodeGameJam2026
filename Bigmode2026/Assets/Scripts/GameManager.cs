@@ -38,7 +38,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float pointsPerSecond = 5f;
     public float Score { get; private set; } = 0f;
-    //ublic float HScore {get; private set; } = 0f;
+
+    private Vector3 scoreTextStartPos;
+    private Vector3 highScoreTextStartPos;
+    private float scoreFontSize;
 
     void Awake() {
         runTimer = GetComponent<RunTimer>();    
@@ -50,7 +53,14 @@ public class GameManager : MonoBehaviour
     }
     
     void Start() {
+        InitTextSettings();
         StartRun();
+    }
+
+    private void InitTextSettings() {
+        scoreTextStartPos = scoreText.transform.localPosition;
+        highScoreTextStartPos = highScoreText.transform.localPosition;
+        scoreFontSize = scoreText.fontSize;
     }
 
     private void StartTextSettings(){
@@ -58,15 +68,15 @@ public class GameManager : MonoBehaviour
         scoreText.alignment = TextAlignmentOptions.Right;
         highScoreText.alignment = TextAlignmentOptions.Right;
         // set position
-        scoreText.transform.localPosition = new Vector2(415,420); // 690, 470
-        highScoreText.transform.localPosition = new Vector2(415, 470);// 690, 520
+        scoreText.transform.localPosition = scoreTextStartPos;
+        highScoreText.transform.localPosition = highScoreTextStartPos;
         // set color
         Color purple = new Color(44f / 255f, 27f / 255f, 46f / 255f);
         scoreText.color = purple;
         highScoreText.color = purple;
         // set font size
-        scoreText.fontSize = 48;
-        highScoreText.fontSize = 48;
+        scoreText.fontSize = scoreFontSize;
+        highScoreText.fontSize = scoreFontSize;
     }
     
     private void EndTextSettings(){
@@ -74,8 +84,8 @@ public class GameManager : MonoBehaviour
         scoreText.alignment = TextAlignmentOptions.Center;
         highScoreText.alignment = TextAlignmentOptions.Center;
         // set position
-        scoreText.transform.localPosition = new Vector2(0,20);// 165
-        highScoreText.transform.localPosition = new Vector2(0, 120);
+        scoreText.transform.localPosition = new Vector2(0,120);// 165
+        highScoreText.transform.localPosition = new Vector2(0, 20);
         // set color
         Color beige = new Color(255f / 255f, 244f / 255f, 224f / 255f);
         scoreText.color = beige;
